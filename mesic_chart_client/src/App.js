@@ -11,6 +11,13 @@ import MyMusicList from './components/PlayList/MyMusicList';
 import Footer from './components/Footer';
 
 class App extends React.Component {
+  constructor(props){
+    super(props)
+    
+    this.state = {
+      isSignIn: false
+    }
+  }
 
   render() {
     return (
@@ -22,7 +29,7 @@ class App extends React.Component {
           />
           <Route
           exact path="/signin"
-          render={() => <SignIn/>}
+          render={() => <SignIn />}
           />
           <Route
           exact path="/playlist"
