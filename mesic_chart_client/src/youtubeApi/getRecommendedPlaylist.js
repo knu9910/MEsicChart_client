@@ -1,12 +1,14 @@
-const key = ''; // youtube 키를 넣어주세요.
+const key = "AIzaSyDH4iRfjuSVRDG3IUAVFG_nXCKNQ17eGUg";
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
 const getRecommendedPlaylist = async (videoCount) => {
-  return await fetch('https://www.googleapis.com/youtube/v3/playlistItems?' + 
-    'playlistId=PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe&part=snippet&' + 
-    `maxResults=${videoCount}&key=${key}`);
-}
+  return await fetch(
+    "https://www.googleapis.com/youtube/v3/playlistItems?" +
+      "playlistId=PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe&part=snippet&" +
+      `maxResults=${videoCount}&key=${key}`
+  );
+};
 
 module.exports = getRecommendedPlaylist;
 
