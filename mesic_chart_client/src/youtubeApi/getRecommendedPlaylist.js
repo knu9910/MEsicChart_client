@@ -1,4 +1,4 @@
-const key = "AIzaSyDH4iRfjuSVRDG3IUAVFG_nXCKNQ17eGUg";
+const key = "";
 
 const fetch = require("node-fetch");
 

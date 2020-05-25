@@ -1,8 +1,4 @@
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const key = process.env.YOUTUBE_API_KEY;
+const key = "";
 
 const fetch = require("node-fetch");
 const urlencode = require("urlencode");
