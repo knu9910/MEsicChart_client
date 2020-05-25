@@ -1,0 +1,48 @@
+.main {
+    text-align : center;
+}
+
+.mesic-Logo {
+    width : 350px;
+    height: 150px;
+    margin-top: 30px;
+}
+.search-Input {
+    width: 400px;
+    height: 30px;
+    font-size : 20px;
+    text-align: left;   
+    font-family: 'Jua', sans-serif;
+}
+.search-Button {
+    width: 100px;
+    height: 36px;
+    font-size : 20px;
+    font-family: 'Jua', sans-serif;
+}
+input::-webkit-input-placeholder {
+    color: red;
+    font-style: italic;
+}
+.main-Videos{
+
+}
+.recommended-Message {
+    font-size: 30px;
+    font-family: 'Jua', sans-serif;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.go-List-Button {
+    width: 245px;
+    border-radius: 20px;
+    font-family: 'Jua', sans-serif;
+    font-size : 20px;
+}
+.signout-Button {
+    width: 245px;
+    border-radius: 20px; 
+    margin-left: 10px;
+    font-size : 20px;
+    font-family: 'Jua', sans-serif;
+}
