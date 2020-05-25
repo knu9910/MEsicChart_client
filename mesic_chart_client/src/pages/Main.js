@@ -6,8 +6,6 @@ import RecommandedMusicList from '../components/Main/RecommandedMusicList';
 import Footer from '../components/Footer';
 import { getRecommendedPlaylist } from '../youtubeApi/getRecommendedPlaylist';
 import { searchMusicsByText } from '../youtubeApi/searchMusicsByText';
-// const getRecommendedPlaylist = require("../youtubeApi/getRecommendedPlaylist");
-// const searchMusicsByText = require("../youtubeApi/searchMusicsByText");
 
 class Main extends React.Component {
     constructor(props) {

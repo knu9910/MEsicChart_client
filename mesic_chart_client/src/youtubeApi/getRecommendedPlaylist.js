@@ -1,8 +1,9 @@
-const key = "";
-
+require('dotenv').config();
+const key = process.env.REACT_APP_YOUTUBE_KEY;
+console.log(key);
 const fetch = require("node-fetch");
 
-const getRecommendedPlaylist = async (videoCount) => {
+export const getRecommendedPlaylist = async (videoCount) => {
   return await fetch(
     "https://www.googleapis.com/youtube/v3/playlistItems?" +
       "playlistId=PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe&part=snippet&" +
@@ -10,13 +11,9 @@ const getRecommendedPlaylist = async (videoCount) => {
   );
 };
 
-module.exports = getRecommendedPlaylist;
 
-/*
-사용 예제
-
-getRecommendedPlaylist(3)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.log(err));
-*/
+// getRecommendedPlaylist(3)
+  // .then(res => res.json())
+  // .then(json => console.log(json))
+  // .catch(err => console.log(err));
+// 
