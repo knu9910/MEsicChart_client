@@ -3,12 +3,11 @@
 
 // import "../../css/MyMusicList.css"
 
-// let loadYT;
-// export default class MyMusicList extends React.Component{
-//   constructor(props) {
+// class MyMusicList extends React.Component{
+//   constructor(props){
 //     super(props);
 //     this.init();
-//     this.video = '1cH2cerUpMQ' //video id
+//     this.video = "1cH2cerUpMQ"
 
 //     window['onYouTubeIframeAPIReady'] = (e) => {
 //       this.YT = window['YT'];
@@ -28,26 +27,21 @@
 //       });
 //     };
 //   }
-
-  
-//   render(){
-//     return (
-//     <div>
-//       <div id="player"></div>
-//     </div>
-//     );
-//   }
+    
 //   init() {
 //     var tag = document.createElement('script');
 //     tag.src = 'https://www.youtube.com/iframe_api';
 //     var firstScriptTag = document.getElementsByTagName('script')[0];
 //     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 //   }
+
+//   render(){
+    
+//     return (
+//        <div id="player"></div>
+    
+//     );
+//   }
 // }
 
-
-
-// ReactDOM.render(
-//   <MyMusicList />,
-//   document.getElementById('player')
-// );
+// export default MyMusicList;
