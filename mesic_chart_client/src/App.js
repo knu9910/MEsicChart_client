@@ -17,16 +17,15 @@ class App extends React.Component {
     this.state = {
       isSignIn: false,
     };
-
-    this.changeSigninStatus = this.changeSigninStatus.bind(this);
+    this.changeSignState = this.changeSignState.bind(this)
   }
 
-  changeSigninStatus(){
+
+  changeSignState() {
     this.setState({
-      isSignIn: true
+      isSignIn : !this.state.isSignIn
     })
   }
-
   render() {
     const { isSignIn } = this.state;
 
@@ -37,20 +36,10 @@ class App extends React.Component {
           <Route
             exact
             path="/signin"
-            render={() => <SignIn isSignIn={isSignIn}
-            changeSigninStatus={this.changeSigninStatus} />}
+            render={() => <SignIn isSignIn={isSignIn} />}
           />
           <Route exact path="/playlist" render={() => <PlayList />} />
-          <Route exact path="/" render={() => <Main />} />
-          <Route
-            path="/"
-            render={() => {
-              if (isSignIn) {
-                return <Redirect to="/" />;
-              }
-              return <Redirect to="/signin" />;
-            }}
-          />
+          <Route exact path="/" render={() => <Main isSignIn={isSignIn} changeSignState={this.changeSignState} />} />
         </Switch>
       </div>
     );
