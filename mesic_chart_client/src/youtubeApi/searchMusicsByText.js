@@ -1,13 +1,12 @@
-const key = "";
-
+import dotenv from "dotenv";
+dotenv.config();
+const key = "AIzaSyApNlWPZJJoP5mp7NRYMF3e56yU1Wua8Hw";
 const fetch = require("node-fetch");
 const urlencode = require("urlencode");
-
 const part = "snippet";
 const type = "video"; // 채널 아닌 비디오만
 const videoCategoryId = "10"; // 음악
-
-const searchMusicsByText = async (text, listCount) => {
+export const searchMusicsByText = async (text, listCount) => {
   text = urlencode(text);
   return fetch(
     "https://www.googleapis.com/youtube/v3/search?" +
@@ -15,12 +14,8 @@ const searchMusicsByText = async (text, listCount) => {
       `&videoCategoryId=${videoCategoryId}`
   );
 };
-
-module.exports = searchMusicsByText;
-
 /*
 사용 예제
-
 searchMusicsByText('여행', 3)
   .then(res => res.json())
   .then(json => console.log(json))

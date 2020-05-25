@@ -1,25 +1,39 @@
 import React from "react";
 
-// import getRecommendedPlaylist from "../youtubeApi/getRecommendedPlaylist";
+import NavBar from "../components/PlayList/NavBar";
+import MyMusicList from "../components/PlayList/MyMusicList";
+import PlayerBar from "../components/PlayList/PlayerBar";
 
 const getRecommendedPlaylist = require("../youtubeApi/getRecommendedPlaylist");
 
-const PlayList = () => {
-  return (
-    <div>
-      <h2>플레이리스트</h2>
-      <button
-        onClick={(e) => {
-          getRecommendedPlaylist(3)
-            .then((res) => res.json())
-            .then((json) => console.log(json))
-            .catch((err) => console.log(err));
-        }}
-      >
-        click me
-      </button>
-    </div>
-  );
-};
+class PlayList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <NavBar />
+        <MyMusicList />
+        {/* <PlayerBar /> */}
+      </div>
+    );
+  }
+}
 
 export default PlayList;
+
+{
+  /* <h2>플레이리스트</h2>
+        <button
+          onClick={(e) => {
+            getRecommendedPlaylist(3)
+              .then((res) => res.json())
+              .then((json) => console.log(json))
+              .catch((err) => console.log(err));
+          }}
+        >
+          click me
+        </button> */
+}

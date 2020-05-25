@@ -1,0 +1,31 @@
+.nav-bar {
+  height: 7vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+  padding: 20px;
+  background-color: #1d1d1d;
+  color: #fff;
+}
+
+.left-content {
+  width: 30%;
+}
+
+.left-content i {
+  margin-right: 10px;
+}
+
+.center-content {
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+}
+
+.right-content {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+}
