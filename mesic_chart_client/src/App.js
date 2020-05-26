@@ -1,14 +1,9 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Main from "./pages/Main";
-import MainSearch from "./components/Main/MainSearch";
-import RecommandedMusicList from "./components/Main/RecommandedMusicList";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import PlayList from "./pages/PlayList";
-import PlayListSearch from "./components/PlayList/PlayListSearch";
-import MyMusicList from "./components/PlayList/MyMusicList";
-import Footer from "./components/Footer";
 
 class App extends React.Component {
   constructor(props) {
