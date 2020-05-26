@@ -1,54 +1,20 @@
 import React from 'react';
 import "../css/Main.css"
-import Navbar from '../components/Navbar';
+import NavBar from '../components/NavBar';
 import RecommandedMusicList from '../components/Main/RecommandedMusicList';
 import Footer from '../components/Footer';
-import { getRecommendedPlaylist } from '../youtubeApi/getRecommendedPlaylist';
-import { searchMusicsByText } from '../youtubeApi/searchMusicsByText';
 
-class Main extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          videos: []
-        };
-        this.searchMusic = this.searchMusic.bind(this)
-    }
-
-    searchMusic(query) {
-        searchMusicsByText(query, 8)
-        .then(res => res.json())
-        .then((json) => {
-            console.log(json)
-          const videos = json.items
-          this.setState({videos})
-        }) 
-        .catch(err => console.log(err));
-    }
-
-    componentDidMount() {
-        getRecommendedPlaylist(8)
-        .then((res) => res.json())
-        .then((json) => {
-            console.log(json.items[0])
-          const videos = json.items
-          this.setState({videos})
-        }) 
-        .catch((err) => console.log(err));
-    }
-    
-    render() {
-        const {changeSignState, isSignIn} = this.props
-        return (
-        
+const Main = (props) => {
+  const {changeSignState, isSignIn, searchMusic, videos, changeMusicPlyer} = props;
+  return (      
         <div className="main">
-            <Navbar searchMusic = {this.searchMusic}/>
-            <RecommandedMusicList videos = {this.state.videos}/>
+            <NavBar searchMusic = {searchMusic}/>
+            <RecommandedMusicList videos = {videos} changeMusicPlyer = {changeMusicPlyer}/>
             <Footer changeSignState = {changeSignState}
             isSignIn = {isSignIn}/>
         </div>
-        );
-    };
+    );
+    
 }
 
 export default Main;

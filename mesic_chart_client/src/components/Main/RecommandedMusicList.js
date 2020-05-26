@@ -4,7 +4,7 @@ import MusicEntry from './MusicEntry'
 const recommandedMusicList = (props) => {
     console.log(props)
     const videos = props.videos.map(video =>
-    <MusicEntry video={video}/>
+    <MusicEntry video={video} changeMusicPlyer = {props.changeMusicPlyer}/>
     ) 
     return (
         <div className="videos-field">
