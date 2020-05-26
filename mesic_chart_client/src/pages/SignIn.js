@@ -1,8 +1,9 @@
 import React from "react";
 import { Link, withRouter} from "react-router-dom";
 import axios from 'axios'
-
+import { GoogleLogin } from 'react-google-login';
 import "../css/SignIn.css";
+require('dotenv').config();
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -21,6 +22,23 @@ class SignIn extends React.Component {
     this.setState({ [key]: e.target.value });
   };
 
+  responseGoogle = (res) => {
+    const {email, name} = res.profileObj;
+    console.log(email,name)
+    axios.post('http://localhost:3000/googleSignin', {
+      email,
+      name
+    })
+    .then(res => {
+      if(res.status === 201){
+        this.props.history.push('/');
+      }
+    })
+  }
+
+  responseFail = (err) => {
+    console.log(err)
+  } 
   reqSignIn = e => {
     console.log("reqSignIn 진입");
 
@@ -46,6 +64,16 @@ class SignIn extends React.Component {
 
   render() {
     return (
+      <div>
+  
+          <GoogleLogin
+            clientId= {"952577669-oht7bpmhcqvptlvdoqjbd9cf7k3moj78.apps.googleusercontent.com"}
+            buttonText="Sign in with Google"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseFail}
+            cookiePolicy={'single_host_origin'}
+          />
+     
       <div className="login-form">
         <form onSubmit={this.reqSignIn}>
           <h1>MEsic Chart</h1>
@@ -63,6 +91,8 @@ class SignIn extends React.Component {
             Not Registered? <Link to="/signup">Create an Account</Link>
           </p>
         </form>
+        <a href = 'http://3.34.124.39:3000/kakao'> KaKaoasdassa </a>
+      </div>
       </div>
     );
   }
