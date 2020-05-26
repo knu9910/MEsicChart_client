@@ -1,6 +1,5 @@
 require('dotenv').config();
 const key = process.env.REACT_APP_YOUTUBE_KEY;
-console.log(key);
 const fetch = require("node-fetch");
 
 export const getRecommendedPlaylist = async (videoCount) => {

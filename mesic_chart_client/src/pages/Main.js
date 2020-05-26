@@ -41,6 +41,7 @@ class Main extends React.Component {
     render() {
         const {changeSignState, isSignIn} = this.props
         return (
+        
         <div className="main">
             <img src={logo} className="mesic-Logo" alt="logo" />
             <MainSearch searchMusic = {this.searchMusic}/>
