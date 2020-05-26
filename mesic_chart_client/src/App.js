@@ -31,7 +31,7 @@ class App extends React.Component {
           <Route
             exact
             path="/signin"
-            render={() => <SignIn isSignIn={isSignIn} />}
+            render={() => <SignIn isSignIn={isSignIn} changeSignState={this.changeSignState} />}
           />
           <Route exact path="/playlist" render={() => <PlayList />} />
           <Route exact path="/" render={() => <Main isSignIn={isSignIn} changeSignState={this.changeSignState} />} />

@@ -51,7 +51,8 @@ class SignIn extends React.Component {
       console.log('reqSignIn() res: ', res)
       if(res.status === 201){
         alert('로그인 성공');
-        this.props.changeSigninStatus();
+        // this.props.changeSigninStatus();
+        this.props.changeSignState();
         this.props.history.push('/');
       }else if(res.status === 404){
         alert('email exists');
