@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const fetch = require("node-fetch");
 const urlencode = require("urlencode");
 const key = process.env.REACT_APP_YOUTUBE_KEY;
@@ -15,11 +15,8 @@ export const searchMusicsByText = async (text, listCount) => {
   );
 };
 
-
-
 /*
 사용 예제
-
 searchMusicsByText('여행', 3)
   .then(res => res.json())
   .then(json => console.log(json))
