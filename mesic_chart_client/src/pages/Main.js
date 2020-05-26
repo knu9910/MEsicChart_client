@@ -1,7 +1,6 @@
 import React from 'react';
 import "../css/Main.css"
-import logo from "../images/free_horizontal_on_white_by_logaster6.png";
-import MainSearch from '../components/Main/MainSearch';
+import Navbar from '../components/Navbar';
 import RecommandedMusicList from '../components/Main/RecommandedMusicList';
 import Footer from '../components/Footer';
 import { getRecommendedPlaylist } from '../youtubeApi/getRecommendedPlaylist';
@@ -17,7 +16,7 @@ class Main extends React.Component {
     }
 
     searchMusic(query) {
-        searchMusicsByText(query, 10)
+        searchMusicsByText(query, 8)
         .then(res => res.json())
         .then((json) => {
             console.log(json)
@@ -28,7 +27,7 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        getRecommendedPlaylist(5)
+        getRecommendedPlaylist(8)
         .then((res) => res.json())
         .then((json) => {
             console.log(json.items[0])
@@ -43,8 +42,7 @@ class Main extends React.Component {
         return (
         
         <div className="main">
-            <img src={logo} className="mesic-Logo" alt="logo" />
-            <MainSearch searchMusic = {this.searchMusic}/>
+            <Navbar searchMusic = {this.searchMusic}/>
             <RecommandedMusicList videos = {this.state.videos}/>
             <Footer changeSignState = {changeSignState}
             isSignIn = {isSignIn}/>

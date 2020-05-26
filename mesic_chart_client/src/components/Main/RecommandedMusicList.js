@@ -7,7 +7,7 @@ const recommandedMusicList = (props) => {
     <MusicEntry video={video}/>
     ) 
     return (
-        <div>
+        <div className="videos-field">
           <div className="recommended-Message">
               추천 음악 리스트
           </div>
