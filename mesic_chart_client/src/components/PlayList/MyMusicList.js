@@ -21,7 +21,6 @@ const MyMusicList = () => {
   const geMusicList = () => {
     console.log("geMusicList 진입");
 
-    // e.preventDefault();
     axios
       .get("http://3.34.124.39:3000/musiclist")
       .then((res) => {
@@ -85,7 +84,6 @@ const MyMusicList = () => {
   };
 
   useEffect(() => {
-    // console.log(window.YT);
     window.onYouTubeIframeAPIReady = () => {
       player = new window.YT.Player("player", {
         height: "580",
