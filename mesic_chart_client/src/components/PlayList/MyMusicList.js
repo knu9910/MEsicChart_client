@@ -97,16 +97,16 @@ const MyMusicList = () => {
         console.log("getMusicList() data: ", data);
         console.log("data[2].videoId: ", data[2]);
         setCurVideo(data[2]);
-        // setCurVideo(JSON.stringify(data[2].videoId));
         let tmp = curVideo.videoId;
         console.log("curVideo: ", curVideo);
+        console.log("tmp: ", tmp);
         window.onYouTubeIframeAPIReady = () => {
           console.log("curVideo: ", curVideo);
           player = new window["YT"].Player("player", {
             height: "380",
             width: "700",
             videoId: tmp,
-            videoId: "BfWqUjunXXU",
+            // videoId: "BfWqUjunXXU",
             host: "https://www.youtube.com",
             playerVars: {
               controls: 0,
@@ -129,6 +129,7 @@ const MyMusicList = () => {
     };
     // }, [curVideo]);
   }, [checkCurrentTime, curVideo, onPlayerReady]);
+  // }, [checkCurrentTime, curVideo, onPlayerReady]);
 
   if (isLoading) {
     if (isPlaying) {
