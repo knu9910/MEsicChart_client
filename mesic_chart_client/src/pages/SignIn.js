@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter} from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from 'axios'
 import { GoogleLogin } from 'react-google-login';
 import "../css/SignIn.css";
@@ -54,7 +54,7 @@ class SignIn extends React.Component {
         // this.props.changeSigninStatus();
         this.props.changeSignState();
         this.props.history.push('/');
-      }else if(res.status === 404){
+      } else if(res.status === 404){
         alert('email exists');
       } 
     })
@@ -65,35 +65,44 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div>
-  
-          <GoogleLogin
-            clientId= {"952577669-oht7bpmhcqvptlvdoqjbd9cf7k3moj78.apps.googleusercontent.com"}
-            buttonText="Sign in with Google"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseFail}
-            cookiePolicy={'single_host_origin'}
-          />
-     
-      <div className="login-form">
-        <form onSubmit={this.reqSignIn}>
-          <h1>MEsic Chart</h1>
-          <input type="text" placeholder="user email" 
-          onChange={this.handleInputValue('email')} required />
-          <input type="password" placeholder="password" 
-          onChange={this.handleInputValue('password')} required />
-          {/* <p className="">
-            <a href="#">아이디/비밀번호 찾기</a>
-          </p> */}
-          <button type="submit">
-            Login
-          </button>
-          <p className="signUp">
-            Not Registered? <Link to="/signup">Create an Account</Link>
-          </p>
-        </form>
-        <a href = 'http://3.34.124.39:3000/kakao'> KaKaoasdassa </a>
-      </div>
+      <div className="wrapper">
+        <div className="login-parent">
+          <div className="login-form">
+            <form onSubmit={this.reqSignIn}>
+              <h1>MEsic Chart</h1>
+              <input type="text" placeholder="user email" 
+              onChange={this.handleInputValue('email')} required />
+              <input type="password" placeholder="password" 
+              onChange={this.handleInputValue('password')} required />
+              {/* <p className="">
+                <a href="#">아이디/비밀번호 찾기</a>
+              </p> */}
+              <button type="submit">
+                Login
+              </button>
+              <p className="signUp">
+                Not Registered? <Link to="/signup">Create an Account</Link>
+              </p>
+            </form>
+          </div>
+          <div className="login-google">
+            <GoogleLogin
+              clientId= {"952577669-oht7bpmhcqvptlvdoqjbd9cf7k3moj78.apps.googleusercontent.com"}
+              render={renderProps => (
+                <button onClick={renderProps.onClick} disabled={renderProps.disabled}>Sign in with Google</button>
+              )}
+              buttonText="Sign in with Google"
+              onSuccess={this.responseGoogle}
+              onFailure={this.responseFail}
+              cookiePolicy={'single_host_origin'}
+            />
+          </div>
+          <div className="login-kakao">
+            <form action="http://3.34.124.39:3000/kakao">
+              <input type="submit" value="Sign in with KaKao" />
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
