@@ -1,12 +1,19 @@
+.wrapper {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  height: 100vh;
+}
+
 .login-form {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
-  padding: 0 45px 30px 45px;
-  border-radius: 10px;
-  height: 90vh;
+}
+
+.login-form form {
   display: flex;
+  flex-direction: column; 
   align-items: center;
-  justify-content: center;
 }
 
 .login-form h1 {
@@ -14,6 +21,7 @@
   font-size: 30px;
   font-weight: 500;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .login-form input {
@@ -65,4 +73,39 @@
   color: #06c5cf;
   font-size: 1.2em;
   font-weight: bold;
+}
+
+.login-parent {
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  /* margin-top: 100px; */
+}
+
+.login-google {
+  /* border: steelblue solid 3px; */
+  display: grid;
+  justify-content: center;
+  /* box-shadow: 0 0 0 rgba(255, 255, 255, 0), 0 0 0 rgba(255, 255, 255, 0); */
+}
+
+.login-google button {
+  justify-self: center;
+  cursor: pointer;
+  margin-top: 5px;
+  border: 0;
+  color: #747474;
+  font-size: 16px;
+}
+
+.login-kakao {
+  margin-top: 2px;
+  justify-self: center;
+}
+
+.login-kakao form input {
+  cursor: pointer;
+  color: #747474;
+  border: 0;
+  font-size: 16px;
 }

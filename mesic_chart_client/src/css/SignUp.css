@@ -1,42 +1,81 @@
+.wrapper {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .SignUp-header {
     text-align : center;
+    display: grid;
+    justify-items: center;
+    width: 370px;
 }
 input::placeholder {
     color: black;
     opacity: 1; /* 파이어폭스에서 뿌옇게 나오는 현상을 방지하기 위한 css */
     font-style : inherit;
 }
+.Mesic-logo-wrapper {
+
+}
 .Mesic-logo {
-    margin-top: 100px;
-    text-align: center; 
+    max-width: 100%; 
+    height: auto;
+    position: relative;
+    top: 20px;
 }
 #legend {
     font-size: 30px;
     text-align: center;
 }
+.Input-Area {
+    display: grid;
+    grid-template-columns: 95px 1fr;
+    gap: 20px;
+    width: 400px;
+}
 .label-field {
     display: inline-block;
     position: relative;
-    font-size:20px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    width: 150px;
+    font-size: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 50px;
+    text-align: end;
+}
+#confirm-password {
+    line-height: 25px;
 }
 .input-field {
-    font-size: 15px;
-    border-radius: 30px;
-}
-.submit {
-    width: 300px;
-    padding: 10px 30px;
-    cursor: pointer;
     display: block;
-    margin: auto;
-    /* background: linear-gradient(to right, #f8f1f1, #9c06e2); */
-    background-color: lightblue;
-    border: 0;
-    outline: none;
-    border-radius: 30px;
-    font-weight: bolder;
-    font-size : 20px;
-    margin-top : 40px;
+    background: none;
+    font-size: 15px;
+    color: #000;
+    text-align: left;
+    padding: 15px;
+    box-sizing: border-box;
+    border: 2.5px solid #000;
+    border-radius: 10px;
+}
+
+.submit {
+    background: none;
+    color: #000;
+    font-size: 15px;
+    font-weight: bold;
+    width: 150px;
+    padding: 15px;
+    border: 2.5px solid #10ac84;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    transition-property: background;
+
+  }
+  
+.submit:hover,
+.submit:active,
+.submit:focus {
+    background: #10ac84;
 }
