@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import MyMusicListEntry from "./MyMusicListEntry"
+import MyMusicListEntry from "./MyMusicListEntry";
 import "../../css/MyMusicList.css";
 
 import axios from "axios";
@@ -19,25 +19,22 @@ const MyMusicList = () => {
   let checkCurrentTime;
 
   const [videoInfo, setVideoInfo] = useState([]);
-  const [curVideo, setCurVideo] = useState(null);
+  const [curVideo, setCurVideo] = useState([]);
 
-  const geMusicList = () => {
-    console.log("geMusicList 진입");
-    return axios.get('http://3.34.124.39:3000/musiclist', {
-      withCredentials:true
-    })
-    .then((res) => {
-      console.log('geMusicList 성공')
-      console.log('musicList: ', res.data)
-      // setVideoInfo(res.data)
-      // setCurVideo(res.data[0].videoId)
-      // setCurVideo("BfWqUjunXXU")
-      // console.log("curVideo: ", curVideo)
-      return res.data
-    })
-    .catch((err) => {
-      console.log("geMusicList Error: ", err)
-    })
+  const getMusicList = () => {
+    console.log("getMusicList 진입");
+    return axios
+      .get("http://3.34.124.39:3000/musiclist", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("getMusicList 성공");
+        console.log("musicList: ", res.data);
+        return res.data;
+      })
+      .catch((err) => {
+        console.log("getMusicList Error: ", err);
+      });
   };
 
   const onPlayerStateChange = (e) => {
@@ -89,48 +86,57 @@ const MyMusicList = () => {
   };
 
   const handleVideoTitleClick = (video) => {
-    console.log("handleVideoTitleClick 성공")
+    console.log("handleVideoTitleClick 성공");
     setCurVideo(video);
-  }
-  
+  };
+
   useEffect(() => {
-    console.log("geMusicList(): ", geMusicList());
-    geMusicList().then(data => {
-      console.log("geMusicList() data: ", data)
-      // setCurVideo(data[0].videoId)
-      console.log("data[2].videoId: ", data[2].videoId)
-      setCurVideo(data[2].videoId);
-      console.log("curVideo: ", curVideo)
-      window.onYouTubeIframeAPIReady = () => {
-        player = new window.YT.Player("player", {
-          height: "380",
-          width: "700",
-          videoId: data[2].videoId,
-          host: 'https://www.youtube.com',
-          playerVars: {
-            controls: 0,
-            enablejsapi : 1,
-            origin: 1
-          },
-          events: {
-            onReaady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-          }
-        });
-      }})
-    
+    if (window.YT) {
+      console.log(window.YT);
+      getMusicList().then((data) => {
+        console.log("getMusicList() data: ", data);
+        console.log("data[2].videoId: ", data[2]);
+        setCurVideo(data[2]);
+        // setCurVideo(JSON.stringify(data[2].videoId));
+        let tmp = curVideo.videoId;
+        console.log("curVideo: ", curVideo);
+        window.onYouTubeIframeAPIReady = () => {
+          console.log("curVideo: ", curVideo);
+          player = new window["YT"].Player("player", {
+            height: "380",
+            width: "700",
+            videoId: tmp,
+            videoId: "BfWqUjunXXU",
+            host: "https://www.youtube.com",
+            playerVars: {
+              controls: 0,
+              enablejsapi: 1,
+              origin: 1,
+            },
+            events: {
+              onReaady: onPlayerReady,
+              onStateChange: onPlayerStateChange,
+            },
+          });
+        };
+      });
+    } else {
+      console.log("can not load player");
+    }
+    // hook의 cleanup 함수로 인식하고, 다음 effect가 실행되기 전에 실행
     return () => {
       clearInterval(checkCurrentTime);
     };
+    // }, [curVideo]);
   }, [checkCurrentTime, curVideo, onPlayerReady]);
 
-  // if (isLoading) {
-  //   if (isPlaying) {
-  //     player.playVideo();
-  //   } else {
-  //     player.pauseVideo();
-  //   }
-  // }
+  if (isLoading) {
+    if (isPlaying) {
+      player.playVideo();
+    } else {
+      player.pauseVideo();
+    }
+  }
 
   return (
     <div>
@@ -144,14 +150,19 @@ const MyMusicList = () => {
             <p>목록</p>
             <i className="fas fa-ellipsis-v"></i>
           </div>
-          {videoInfo.map(video => (
-            <MyMusicListEntry video={video} thumbnail={video.thumbnail} title={video.title} 
-            musician={video.description} totalTime={totalTime}
-            handleVideoTitleClick={handleVideoTitleClick.bind(this)}/>
+          {videoInfo.map((video) => (
+            <MyMusicListEntry
+              video={video}
+              thumbnail={video.thumbnail}
+              title={video.title}
+              musician={video.description}
+              totalTime={totalTime}
+              handleVideoTitleClick={handleVideoTitleClick.bind(this)}
+            />
           ))}
         </div>
       </div>
-      
+
       {/* playerBar */}
       <div className="playerBar">
         <div
@@ -179,7 +190,6 @@ const MyMusicList = () => {
             onMouseOver={() => setactiveButton(true)}
             onMouseOut={() => setactiveButton(false)}
             onMouseDown={drag}
-            onClick={console.log(curVideo)}
           />
         </div>
         <div className="controlsWrap">
@@ -209,24 +219,26 @@ const MyMusicList = () => {
               <i className="fas fa-step-forward"></i>
             </button>
           </div>
-          
+
           <div className="musicInfo">
             <div className="thumbnail">
               <img src="../images/music_icon.png" />
             </div>
             <div className="music-info">
-              <div className="title">[MV] IU(아이유) _ Blueming(블루밍)</div>
+              <div className="title">IU(아이유)</div>
               <div className="musician">IU(아이유)</div>
             </div>
-            <div className="time">{isLoading ? `${currentTime} / ${totalTime}` : ""}</div>
+            <div className="time">
+              {isLoading ? `${currentTime} / ${totalTime}` : ""}
+            </div>
           </div>
 
           <div className="rightControl">
             <button className="btn" onClick={() => player.unMute()}>
-              <i className="fas fa-volume-up" ></i>
+              <i className="fas fa-volume-up"></i>
             </button>
             <button className="btn" onClick={() => player.unMute()}>
-            <i className="fas fa-volume-mute"></i>
+              <i className="fas fa-volume-mute"></i>
             </button>
             <i className="fas fa-random"></i>
           </div>
