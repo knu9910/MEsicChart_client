@@ -19,22 +19,14 @@ const MyMusicList = () => {
   let checkCurrentTime;
 
   const [videoInfo, setVideoInfo] = useState([]);
-  const [curVideo, setCurVideo] = useState([]);
+  const [curVideo, setCurVideo] = useState(null);
 
-  const getMusicList = () => {
-    console.log("getMusicList 진입");
-    return axios
-      .get("http://3.34.124.39:3000/musiclist", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log("getMusicList 성공");
-        console.log("musicList: ", res.data);
-        return res.data;
-      })
-      .catch((err) => {
-        console.log("getMusicList Error: ", err);
-      });
+  const onPlayerReady = () => {
+    console.log("onPlayerReady 진입");
+    setLoading(true);
+    setPlaying(true);
+    checkCurrentTime = setInterval(setTime, 1000);
+    setTotalTime(() => transTime(player.getDuration()));
   };
 
   const onPlayerStateChange = (e) => {
@@ -64,13 +56,6 @@ const MyMusicList = () => {
     setCurrentTime(transTime(player.getCurrentTime().toFixed()));
   };
 
-  const onPlayerReady = () => {
-    setLoading(true);
-    setPlaying(true);
-    checkCurrentTime = setInterval(setTime, 1000);
-    setTotalTime(() => transTime(player.getDuration()));
-  };
-
   const dragHandler = (e) => {
     setMouseDragX(e.x);
     const nowFraction = e.x / window.innerWidth;
@@ -90,22 +75,53 @@ const MyMusicList = () => {
     setCurVideo(video);
   };
 
+  // const getMusicList = () => {
+  //   console.log("getMusicList 진입");
+  //   return axios
+  //     .get("http://3.34.124.39:3000/musiclist", {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       console.log("getMusicList 성공");
+  //       console.log("musicList: ", res.data);
+  //       console.log("res.data[2]: ", res.data[2]);
+  //       console.log("res.data[2]: ", res.data[2].videoId);
+  //       // setVideoInfo(res.data);
+  //       // setCurVideo(res.data[2].videoId);
+  //       // return res.data;
+  //       res.json();
+  //     })
+  //     .then(setVideoInfo(res.data), setCurVideo(res.data[2].videoId))
+  //     .catch((err) => {
+  //       console.log("getMusicList Error: ", err);
+  //     });
+  // };
+  // if (curVideo === null) {
+  // }
+  // useEffect(() => {
+  //   axios.get("http://3.34.124.39:3000/musiclist").then((res) => {
+  //     console.log("res.data: ", res.data);
+  //     setVideoInfo(res.data);
+  //     setCurVideo(res.data[2]);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    if (window.YT) {
-      console.log(window.YT);
-      getMusicList().then((data) => {
-        console.log("getMusicList() data: ", data);
-        console.log("data[2].videoId: ", data[2]);
-        setCurVideo(data[2]);
-        let tmp = curVideo.videoId;
-        console.log("curVideo: ", curVideo);
-        console.log("tmp: ", tmp);
+    if (curVideo === null) {
+      axios.get("http://3.34.124.39:3000/musiclist").then((res) => {
+        console.log("res.data: ", res.data);
+        setVideoInfo(res.data);
+        setCurVideo(res.data[2]);
+      });
+    } else {
+      if (window.YT) {
+        console.log(window.YT);
+        console.log("curVideo: ", curVideo.videoId);
         window.onYouTubeIframeAPIReady = () => {
-          console.log("curVideo: ", curVideo);
           player = new window["YT"].Player("player", {
             height: "380",
             width: "700",
-            videoId: tmp,
+            videoId: curVideo.videoId,
             // videoId: "BfWqUjunXXU",
             host: "https://www.youtube.com",
             playerVars: {
@@ -114,30 +130,33 @@ const MyMusicList = () => {
               origin: 1,
             },
             events: {
+              // video player가 준비되면 이 함수 호출
               onReaady: onPlayerReady,
+              // player의 상태가 바뀌면 이 함수 호출
               onStateChange: onPlayerStateChange,
             },
           });
         };
-      });
-    } else {
-      console.log("can not load player");
+      } else {
+        console.log("can not load player");
+      }
+      // hook의 cleanup 함수로 인식하고, 다음 effect가 실행되기 전에 실행
+      return () => {
+        clearInterval(checkCurrentTime);
+      };
     }
-    // hook의 cleanup 함수로 인식하고, 다음 effect가 실행되기 전에 실행
-    return () => {
-      clearInterval(checkCurrentTime);
-    };
-    // }, [curVideo]);
   }, [checkCurrentTime, curVideo, onPlayerReady]);
+  // }, [curVideo, checkCurrentTime]);
+  // }, [checkCurrentTime]);
   // }, [checkCurrentTime, curVideo, onPlayerReady]);
 
-  if (isLoading) {
-    if (isPlaying) {
-      player.playVideo();
-    } else {
-      player.pauseVideo();
-    }
-  }
+  // if (isLoading) {
+  //   if (isPlaying) {
+  //     player.playVideo();
+  //   } else {
+  //     player.pauseVideo();
+  //   }
+  // }
 
   return (
     <div>
