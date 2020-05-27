@@ -1,21 +1,17 @@
 import React from "react";
 
-import NavBar from "../components/PlayList/NavBar";
+import NavBar from "../components/NavBar";
 import MyMusicList from "../components/PlayList/MyMusicList";
 
-class PlayList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const PlayList  = (props) => {
 
-  render() {
-    return (
-      <div>
-        <NavBar />
+  return (
+    <div>
+        <NavBar searchMusic={props.searchMusic}/>
         <MyMusicList />
-      </div>
-    );
-  }
+    </div>
+  );
+  
 }
 
 export default PlayList;
