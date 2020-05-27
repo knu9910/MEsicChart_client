@@ -25,12 +25,13 @@ class SignIn extends React.Component {
   responseGoogle = (res) => {
     const {email, name} = res.profileObj;
     console.log(email,name)
-    axios.post('http://localhost:3000/googleSignin', {
+    axios.post('http://3.34.124.39:3000/googleSignin', {
       email,
       name
     })
     .then(res => {
       if(res.status === 201){
+        this.props.changeSignState();
         this.props.history.push('/');
       }
     })
@@ -73,9 +74,6 @@ class SignIn extends React.Component {
               onChange={this.handleInputValue('email')} required />
               <input type="password" placeholder="password" 
               onChange={this.handleInputValue('password')} required />
-              {/* <p className="">
-                <a href="#">아이디/비밀번호 찾기</a>
-              </p> */}
               <button type="submit">
                 Login
               </button>
@@ -86,7 +84,7 @@ class SignIn extends React.Component {
           </div>
           <div className="login-google">
             <GoogleLogin
-              clientId= {"952577669-oht7bpmhcqvptlvdoqjbd9cf7k3moj78.apps.googleusercontent.com"}
+              clientId= {process.env.REACT_APP_CLIENT_ID}
               render={renderProps => (
                 <button onClick={renderProps.onClick} disabled={renderProps.disabled}>Sign in with Google</button>
               )}
@@ -97,7 +95,7 @@ class SignIn extends React.Component {
             />
           </div>
           <div className="login-kakao">
-            <form action="http://3.34.124.39:3000/kakao">
+            <form action="http://3.34.124.39:3000/kakao" onClick = {this.changeSignState}>
               <input type="submit" value="Sign in with KaKao" />
             </form>
           </div>
