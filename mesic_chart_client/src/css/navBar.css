@@ -10,22 +10,27 @@
 }
 
 .left-content {
-  width: 30%;
+  width: 30vw;
 }
 
 .left-content i {
   margin-right: 10px;
 }
 
+.link{
+  text-decoration: none;
+  color: #fff;
+}
+
 .center-content {
-  width: 40%;
+  width: 40vw;
   display: flex;
   justify-content: space-around;
   margin: 0 auto;
 }
 
 .right-content {
-  width: 30%;
+  width: 30vw;
   display: flex;
   justify-content: flex-end;
 }

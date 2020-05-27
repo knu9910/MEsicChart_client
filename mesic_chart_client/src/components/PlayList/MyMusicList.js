@@ -21,16 +21,19 @@ const MyMusicList = () => {
   const [videoInfo, setVideoInfo] = useState([]);
   const [curVideo, setCurVideo] = useState(null);
 
-  const geMusicList =  () => {
+  const geMusicList = () => {
     console.log("geMusicList 진입");
-     axios.get('http://3.34.124.39:3000/musiclist', {
+    return axios.get('http://3.34.124.39:3000/musiclist', {
       withCredentials:true
-     })
+    })
     .then((res) => {
       console.log('geMusicList 성공')
       console.log('musicList: ', res.data)
-      setVideoInfo(res.data)
-      setCurVideo("BfWqUjunXXU")
+      // setVideoInfo(res.data)
+      // setCurVideo(res.data[0].videoId)
+      // setCurVideo("BfWqUjunXXU")
+      // console.log("curVideo: ", curVideo)
+      return res.data
     })
     .catch((err) => {
       console.log("geMusicList Error: ", err)
@@ -68,7 +71,6 @@ const MyMusicList = () => {
     setLoading(true);
     setPlaying(true);
     checkCurrentTime = setInterval(setTime, 1000);
-    geMusicList();
     setTotalTime(() => transTime(player.getDuration()));
   };
 
@@ -87,41 +89,48 @@ const MyMusicList = () => {
   };
 
   const handleVideoTitleClick = (video) => {
+    console.log("handleVideoTitleClick 성공")
     setCurVideo(video);
   }
   
   useEffect(() => {
-    window.onYouTubeIframeAPIReady = () => {
-      player = new window.YT.Player("player", {
-        height: "380",
-        width: "700",
-        videoId: curVideo,
-        host: 'https://www.youtube.com',
-        playerVars: {
-          controls: 0,
-          enablejsapi : 1,
-          origin: 1
-        },
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange,
-        },
-        onPlayerReady,
-      });
-    };
-
+    console.log("geMusicList(): ", geMusicList());
+    geMusicList().then(data => {
+      console.log("geMusicList() data: ", data)
+      // setCurVideo(data[0].videoId)
+      console.log("data[2].videoId: ", data[2].videoId)
+      setCurVideo(data[2].videoId);
+      console.log("curVideo: ", curVideo)
+      window.onYouTubeIframeAPIReady = () => {
+        player = new window.YT.Player("player", {
+          height: "380",
+          width: "700",
+          videoId: data[2].videoId,
+          host: 'https://www.youtube.com',
+          playerVars: {
+            controls: 0,
+            enablejsapi : 1,
+            origin: 1
+          },
+          events: {
+            onReaady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+          }
+        });
+      }})
+    
     return () => {
       clearInterval(checkCurrentTime);
     };
-  });
+  }, [checkCurrentTime, curVideo, onPlayerReady]);
 
-  if (isLoading) {
-    if (isPlaying) {
-      player.playVideo();
-    } else {
-      player.pauseVideo();
-    }
-  }
+  // if (isLoading) {
+  //   if (isPlaying) {
+  //     player.playVideo();
+  //   } else {
+  //     player.pauseVideo();
+  //   }
+  // }
 
   return (
     <div>
@@ -140,20 +149,6 @@ const MyMusicList = () => {
             musician={video.description} totalTime={totalTime}
             handleVideoTitleClick={handleVideoTitleClick.bind(this)}/>
           ))}
-          {/* <div className="top-bar">
-            <p>목록</p>
-            <i className="fas fa-ellipsis-v"></i>
-          </div>
-          <div className="contents">
-          <div className="thumbnail">
-              <img src="../images/music_icon.png" />
-            </div>
-            <div className="music-info">
-              <div className="title">노래 제목</div>
-              <div className="musician">가수</div>
-            </div>
-            <div className="time">{totalTime}</div>
-            </div> */}
         </div>
       </div>
       
@@ -227,8 +222,12 @@ const MyMusicList = () => {
           </div>
 
           <div className="rightControl">
-            <i className="fas fa-volume-up"></i>
+            <button className="btn" onClick={() => player.unMute()}>
+              <i className="fas fa-volume-up" ></i>
+            </button>
+            <button className="btn" onClick={() => player.unMute()}>
             <i className="fas fa-volume-mute"></i>
+            </button>
             <i className="fas fa-random"></i>
           </div>
         </div>
