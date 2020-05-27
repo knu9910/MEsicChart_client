@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import MyMusicList from "../components/PlayList/MyMusicList";
 
 const PlayList  = (props) => {
-  const {searchMusic, changeSignState,  isSignIn } = props;
+  const {searchMusic, onLogout, isSignIn } = props;
   console.log(isSignIn);
   if(!isSignIn){
     alert('로그인해!')
@@ -13,7 +13,7 @@ const PlayList  = (props) => {
   }else {
     return (
       <div>
-          <NavBar searchMusic={searchMusic} changeSignState={changeSignState} isSignIn={isSignIn}/>
+          <NavBar searchMusic={searchMusic} onLogout={onLogout} isSignIn={isSignIn}/>
           <MyMusicList />
       </div>
     );
