@@ -91,43 +91,44 @@ const MyMusicList = () => {
   };
 
   useEffect(() => {
-    if (window.YT) {
-      console.log(window.YT);
-      getMusicList().then((data) => {
-        console.log("getMusicList() data: ", data);
-        console.log("data[2].videoId: ", data[2]);
-        setCurVideo(data[2]);
-        // setCurVideo(JSON.stringify(data[2].videoId));
-        let tmp = curVideo.videoId;
-        console.log("curVideo: ", curVideo);
-        window.onYouTubeIframeAPIReady = () => {
-          console.log("curVideo: ", curVideo);
-          player = new window["YT"].Player("player", {
-            height: "380",
-            width: "700",
-            videoId: tmp,
-            videoId: "BfWqUjunXXU",
-            host: "https://www.youtube.com",
-            playerVars: {
-              controls: 0,
-              enablejsapi: 1,
-              origin: 1,
-            },
-            events: {
-              onReaady: onPlayerReady,
-              onStateChange: onPlayerStateChange,
-            },
-          });
-        };
-      });
-    } else {
-      console.log("can not load player");
+    window.onYouTubeIframeAPIReady = () => {
+      console.log("YT Iframe 생성");
+      return axios
+      .get("http://3.34.124.39:3000/musiclist", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("getMusicList 성공");
+        console.log("musicList: ", res.data);
+        return res.data;
+      }).then(data => {
+        setCurVideo(data[0])
+        return data[0]
+      })
+      .then(res => {
+        console.log("마지막 res: ", res)
+        player = new window["YT"].Player("player", {
+          height: "380",
+          width: "700",
+          videoId: res.videoId,
+          // videoId: "BfWqUjunXXU",
+          host: "https://www.youtube.com",
+          playerVars: {
+            controls: 0,
+            enablejsapi: 1,
+            origin: 1,
+          },
+          events: {
+            onReaady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+          },
+        });
+      })
     }
     // hook의 cleanup 함수로 인식하고, 다음 effect가 실행되기 전에 실행
     return () => {
       clearInterval(checkCurrentTime);
     };
-    // }, [curVideo]);
   }, [checkCurrentTime, curVideo, onPlayerReady]);
 
   if (isLoading) {
