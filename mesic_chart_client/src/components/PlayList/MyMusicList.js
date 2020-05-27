@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 
+import MyMusicListEntry from "./MyMusicListEntry"
 import "../../css/MyMusicList.css";
 
 import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 export let player;
 
@@ -15,23 +18,23 @@ const MyMusicList = () => {
   const [activeButton, setactiveButton] = useState(false);
   let checkCurrentTime;
 
-  const [videoId, setVideoId] = useState([]);
+  const [videoInfo, setVideoInfo] = useState([]);
   const [curVideo, setCurVideo] = useState(null);
 
-  const geMusicList = () => {
+  const geMusicList =  () => {
     console.log("geMusicList 진입");
-
-    axios
-      .get("http://3.34.124.39:3000/musiclist")
-      .then((res) => {
-        console.log("geMusicList() res: ", res);
-        console.log("geMusicList 성공");
-        console.log("res.data: ", res.data);
-        setVideoId(res.data);
-      })
-      .catch((err) => {
-        console.log("geMusicList Error: ", err);
-      });
+     axios.get('http://3.34.124.39:3000/musiclist', {
+      withCredentials:true
+     })
+    .then((res) => {
+      console.log('geMusicList 성공')
+      console.log('musicList: ', res.data)
+      setVideoInfo(res.data)
+      setCurVideo("BfWqUjunXXU")
+    })
+    .catch((err) => {
+      console.log("geMusicList Error: ", err)
+    })
   };
 
   const onPlayerStateChange = (e) => {
@@ -83,14 +86,21 @@ const MyMusicList = () => {
     });
   };
 
+  const handleVideoTitleClick = (video) => {
+    setCurVideo(video);
+  }
+  
   useEffect(() => {
     window.onYouTubeIframeAPIReady = () => {
       player = new window.YT.Player("player", {
-        height: "580",
-        width: "900",
-        videoId: "TA3GqDcZuN0",
+        height: "380",
+        width: "700",
+        videoId: curVideo,
+        host: 'https://www.youtube.com',
         playerVars: {
           controls: 0,
+          enablejsapi : 1,
+          origin: 1
         },
         events: {
           onReady: onPlayerReady,
@@ -103,7 +113,7 @@ const MyMusicList = () => {
     return () => {
       clearInterval(checkCurrentTime);
     };
-  }, [checkCurrentTime, onPlayerReady]);
+  });
 
   if (isLoading) {
     if (isPlaying) {
@@ -125,29 +135,28 @@ const MyMusicList = () => {
             <p>목록</p>
             <i className="fas fa-ellipsis-v"></i>
           </div>
+          {videoInfo.map(video => (
+            <MyMusicListEntry video={video} thumbnail={video.thumbnail} title={video.title} 
+            musician={video.description} totalTime={totalTime}
+            handleVideoTitleClick={handleVideoTitleClick.bind(this)}/>
+          ))}
+          {/* <div className="top-bar">
+            <p>목록</p>
+            <i className="fas fa-ellipsis-v"></i>
+          </div>
           <div className="contents">
-            <div className="thumbnail">
+          <div className="thumbnail">
               <img src="../images/music_icon.png" />
             </div>
             <div className="music-info">
               <div className="title">노래 제목</div>
               <div className="musician">가수</div>
             </div>
-            <div className="time">06:02</div>
-          </div>
-          <div className="contents">
-            <div className="thumbnail">
-              <img src="../images/music_icon.png" />
-            </div>
-            <div className="music-info">
-              <div className="title">노래 제목</div>
-              <div className="musician">가수</div>
-            </div>
-            <div className="time">06:02</div>
-          </div>
+            <div className="time">{totalTime}</div>
+            </div> */}
         </div>
       </div>
-
+      
       {/* playerBar */}
       <div className="playerBar">
         <div
@@ -175,34 +184,53 @@ const MyMusicList = () => {
             onMouseOver={() => setactiveButton(true)}
             onMouseOut={() => setactiveButton(false)}
             onMouseDown={drag}
+            onClick={console.log(curVideo)}
           />
         </div>
         <div className="controlsWrap">
-          <button
-            className="btn"
-            onClick={() => player.seekTo(player.getCurrentTime() - 10, true)}
-          >
-            <i className="fas fa-step-backward"></i>
-          </button>
-          <button
-            className="btn"
-            onClick={() => {
-              setPlaying(!isPlaying);
-            }}
-          >
-            {isPlaying ? (
-              <i className="fas fa-pause"></i>
-            ) : (
-              <i className="fas fa-play"></i>
-            )}
-          </button>
-          <button
-            className="btn"
-            onClick={() => player.seekTo(player.getCurrentTime() + 10, true)}
-          >
-            <i className="fas fa-step-forward"></i>
-          </button>
-          {isLoading ? `${currentTime} / ${totalTime}` : ""}
+          <div className="leftControl">
+            <button
+              className="btn"
+              onClick={() => player.seekTo(player.getCurrentTime() - 10, true)}
+            >
+              <i className="fas fa-step-backward"></i>
+            </button>
+            <button
+              className="btn"
+              onClick={() => {
+                setPlaying(!isPlaying);
+              }}
+            >
+              {isPlaying ? (
+                <i className="fas fa-pause"></i>
+              ) : (
+                <i className="fas fa-play"></i>
+              )}
+            </button>
+            <button
+              className="btn"
+              onClick={() => player.seekTo(player.getCurrentTime() + 10, true)}
+            >
+              <i className="fas fa-step-forward"></i>
+            </button>
+          </div>
+          
+          <div className="musicInfo">
+            <div className="thumbnail">
+              <img src="../images/music_icon.png" />
+            </div>
+            <div className="music-info">
+              <div className="title">[MV] IU(아이유) _ Blueming(블루밍)</div>
+              <div className="musician">IU(아이유)</div>
+            </div>
+            <div className="time">{isLoading ? `${currentTime} / ${totalTime}` : ""}</div>
+          </div>
+
+          <div className="rightControl">
+            <i className="fas fa-volume-up"></i>
+            <i className="fas fa-volume-mute"></i>
+            <i className="fas fa-random"></i>
+          </div>
         </div>
       </div>
     </div>

@@ -46,12 +46,11 @@ class SignIn extends React.Component {
     axios.post('http://3.34.124.39:3000/signin', {
       email: this.state.email,
       password: this.state.password
-    })
+    }, {withCredentials:true})
     .then((res) => {
       console.log('reqSignIn() res: ', res)
       if(res.status === 201){
         alert('로그인 성공');
-        // this.props.changeSigninStatus();
         this.props.changeSignState();
         this.props.history.push('/');
       }else if(res.status === 404){
