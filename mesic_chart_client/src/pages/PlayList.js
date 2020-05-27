@@ -1,17 +1,24 @@
 import React from "react";
-
+import { withRouter } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import MyMusicList from "../components/PlayList/MyMusicList";
 
 const PlayList  = (props) => {
-
-  return (
-    <div>
-        <NavBar searchMusic={props.searchMusic}/>
-        <MyMusicList />
-    </div>
-  );
+  const {searchMusic, changeSignState,  isSignIn } = props;
+  console.log(isSignIn);
+  if(!isSignIn){
+    alert('로그인해!')
+    props.history.push('/signin');
+    return(<div>NOT login</div>);
+  }else {
+    return (
+      <div>
+          <NavBar searchMusic={searchMusic} changeSignState={changeSignState} isSignIn={isSignIn}/>
+          <MyMusicList />
+      </div>
+    );
+  }
   
 }
 
-export default PlayList;
+export default withRouter(PlayList);
