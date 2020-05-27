@@ -16,7 +16,7 @@ class App extends React.Component {
     this.state = {
       isSignIn: false,
       videos:[],
-      video: []
+      video:null
     };
     this.changeSignState = this.changeSignState.bind(this);
     this.searchMusic = this.searchMusic.bind(this);
@@ -68,9 +68,9 @@ class App extends React.Component {
             path="/signin"
             render={() => <SignIn isSignIn={isSignIn} changeSignState={this.changeSignState} />}
           />
-          <Route exact path="/playlist" render={() => <PlayList searchMusic={this.searchMusic}/>} />
+          <Route exact path="/playlist" render={() => <PlayList isSignIn={isSignIn} searchMusic={this.searchMusic} changeSignState={this.changeSignState}/>} />
           <Route exact path="/" render={() => <Main isSignIn={isSignIn} changeSignState={this.changeSignState} searchMusic={this.searchMusic} videos={videos} changeMusicPlyer={this.changeMusicPlyer}/>} />
-          <Route exact path="/musicPlyer" render={() => <MusicPlyer video = {video} searchMusic={this.searchMusic}/>} />
+          <Route exact path="/musicPlyer" render={() => <MusicPlyer isSignIn={isSignIn} video = {video} searchMusic={this.searchMusic} changeSignState={this.changeSignState}/>} />
         </Switch>
       </div>
     );
