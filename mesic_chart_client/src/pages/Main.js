@@ -8,7 +8,7 @@ const Main = (props) => {
   const {changeSignState, isSignIn, searchMusic, videos, changeMusicPlyer} = props;
   return (      
         <div className="main">
-            <NavBar searchMusic = {searchMusic}/>
+            <NavBar isSignIn = {isSignIn} searchMusic = {searchMusic} changeSignState = {changeSignState}/>
             <RecommandedMusicList videos = {videos} changeMusicPlyer = {changeMusicPlyer}/>
             <Footer changeSignState = {changeSignState}
             isSignIn = {isSignIn}/>

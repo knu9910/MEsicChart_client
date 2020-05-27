@@ -2,17 +2,17 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 
 const MusicPlyer = (props) => {
-    console.log(props.video)
+  const {searchMusic, changeSignState, isSignIn, video } = props;
   let videoId;
-  if(props.video) {
-    videoId = props.video.snippet.resourceId ? props.video.snippet.resourceId.videoId : props.video.id.videoId
-    const videoTitle = props.video.snippet.title;
+  if(video) {
+    videoId = video.snippet.resourceId ? video.snippet.resourceId.videoId : video.id.videoId
+    const videoTitle = video.snippet.title;
   }else {
     videoId = 1;
   }
   return (
       <div>
-       <NavBar searchMusic={props.searchMusic}/>
+       <NavBar searchMusic={searchMusic} changeSignState={changeSignState} isSignIn={isSignIn}/>
        <iframe className="embed-responsive-item"
         src={"https://www.youtube.com/embed/"+ videoId} allowFullScreen></iframe>
     </div>
