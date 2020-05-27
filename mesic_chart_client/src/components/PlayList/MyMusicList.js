@@ -19,31 +19,24 @@ const MyMusicList = () => {
   let checkCurrentTime;
 
   const [videoInfo, setVideoInfo] = useState([]);
-  const [curVideo, setCurVideo] = useState([]);
+  const [curVideo, setCurVideo] = useState(null);
 
-  const getMusicList = () => {
-    console.log("getMusicList 진입");
-    return axios
-      .get("http://3.34.124.39:3000/musiclist", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log("getMusicList 성공");
-        console.log("musicList: ", res.data);
-        return res.data;
-      })
-      .catch((err) => {
-        console.log("getMusicList Error: ", err);
-      });
+  const onPlayerReady = () => {
+    console.log("onPlayerReady 진입");
+    setLoading(true);
+    setPlaying(true);
+    checkCurrentTime = setInterval(setTime, 1000);
+    setTotalTime(() => transTime(player.getDuration()));
   };
 
   const onPlayerStateChange = (e) => {
+    console.log("onPlayerStateChange 진입")
     console.log(e.data);
-    if (e.data === 1) {
-      setPlaying(true);
-    } else if (e.data === 2) {
-      setPlaying(false);
-    }
+    // if (e.data === 1) {
+    //   setPlaying(true);
+    // } else if (e.data === 2) {
+    //   setPlaying(false);
+    // }
   };
 
   const transTime = (seconds) => {
@@ -64,13 +57,6 @@ const MyMusicList = () => {
     setCurrentTime(transTime(player.getCurrentTime().toFixed()));
   };
 
-  const onPlayerReady = () => {
-    setLoading(true);
-    setPlaying(true);
-    checkCurrentTime = setInterval(setTime, 1000);
-    setTotalTime(() => transTime(player.getDuration()));
-  };
-
   const dragHandler = (e) => {
     setMouseDragX(e.x);
     const nowFraction = e.x / window.innerWidth;
@@ -88,24 +74,66 @@ const MyMusicList = () => {
   const handleVideoTitleClick = (video) => {
     console.log("handleVideoTitleClick 성공");
     setCurVideo(video);
+    console.log("전 curVideo: ", curVideo)
+    player.loadVideoById(video, 0)
+    console.log(player)
+    console.log("후 curVideo: ", curVideo)
   };
 
+  const handlePlayAndPause = () => {
+    console.log("handlePlayAndPause 진입");
+      if (!isPlaying) {
+        console.log("play: ", isPlaying)     
+        player.playVideo();
+        setPlaying(true)
+      } else {
+        console.log("play: ", isPlaying)
+        player.pauseVideo();
+        setPlaying(false)
+      }
+  };
+  
+  const handleMuteAndUnMute = () => {
+    console.log("handleMuteAndUnMute 진입");
+
+    if(!activeButton){
+      console.log("mute: ", activeButton)
+      player.mute();
+      setactiveButton(true)
+    }else{
+      console.log("unMute: ", activeButton)
+      player.unMute();
+      setactiveButton(false)
+    }
+  }
+
+  const handleListInsert = () => {
+    console.log("handleListInsert 진입");
+
+    player.cuePlaylist(videoInfo, 0)
+  }
+
+  const handleNextVideo = () => {
+    console.log("handleNextVideo 진입");
+    player.nextVideo();
+  }
+
   useEffect(() => {
-    if (window.YT) {
-      console.log(window.YT);
-      getMusicList().then((data) => {
-        console.log("getMusicList() data: ", data);
-        console.log("data[2].videoId: ", data[2]);
-        setCurVideo(data[2]);
-        let tmp = curVideo.videoId;
-        console.log("curVideo: ", curVideo);
-        console.log("tmp: ", tmp);
+    if (curVideo === null) {
+      axios.get("http://3.34.124.39:3000/musiclist").then((res) => {
+        console.log("res.data: ", res.data);
+        setVideoInfo(res.data);
+        setCurVideo(res.data[2]);
+      });
+    } else {
+      if (window.YT) {
+        console.log(window.YT);
+        console.log("curVideo: ", curVideo.videoId);
         window.onYouTubeIframeAPIReady = () => {
-          console.log("curVideo: ", curVideo);
           player = new window["YT"].Player("player", {
             height: "380",
             width: "700",
-            videoId: tmp,
+            videoId: curVideo.videoId,
             // videoId: "BfWqUjunXXU",
             host: "https://www.youtube.com",
             playerVars: {
@@ -114,30 +142,22 @@ const MyMusicList = () => {
               origin: 1,
             },
             events: {
+              // video player가 준비되면 이 함수 호출
               onReaady: onPlayerReady,
+              // player의 상태가 바뀌면 이 함수 호출
               onStateChange: onPlayerStateChange,
             },
           });
         };
-      });
-    } else {
-      console.log("can not load player");
+      } else {
+        console.log("can not load player");
+      }
+      // hook의 cleanup 함수로 인식하고, 다음 effect가 실행되기 전에 실행
+      return () => {
+        clearInterval(checkCurrentTime);
+      };
     }
-    // hook의 cleanup 함수로 인식하고, 다음 effect가 실행되기 전에 실행
-    return () => {
-      clearInterval(checkCurrentTime);
-    };
-    // }, [curVideo]);
   }, [checkCurrentTime, curVideo, onPlayerReady]);
-  // }, [checkCurrentTime, curVideo, onPlayerReady]);
-
-  if (isLoading) {
-    if (isPlaying) {
-      player.playVideo();
-    } else {
-      player.pauseVideo();
-    }
-  }
 
   return (
     <div>
@@ -151,8 +171,8 @@ const MyMusicList = () => {
             <p>목록</p>
             <i className="fas fa-ellipsis-v"></i>
           </div>
-          {videoInfo.map((video) => (
-            <MyMusicListEntry
+          {videoInfo.map((video, index) => (
+            <MyMusicListEntry key={index}
               video={video}
               thumbnail={video.thumbnail}
               title={video.title}
@@ -204,7 +224,8 @@ const MyMusicList = () => {
             <button
               className="btn"
               onClick={() => {
-                setPlaying(!isPlaying);
+                console.log("curVideo: ", curVideo)
+                handlePlayAndPause()
               }}
             >
               {isPlaying ? (
@@ -215,7 +236,8 @@ const MyMusicList = () => {
             </button>
             <button
               className="btn"
-              onClick={() => player.seekTo(player.getCurrentTime() + 10, true)}
+              // onClick={() => player.seekTo(player.getCurrentTime() + 10, true)}
+              onClick={() => handleNextVideo()}
             >
               <i className="fas fa-step-forward"></i>
             </button>
@@ -223,11 +245,14 @@ const MyMusicList = () => {
 
           <div className="musicInfo">
             <div className="thumbnail">
-              <img src="../images/music_icon.png" />
+              <img src={curVideo? curVideo.thumbnail : ""} />
             </div>
             <div className="music-info">
-              <div className="title">IU(아이유)</div>
-              <div className="musician">IU(아이유)</div>
+              <div className="title">
+                {curVideo? curVideo.title : null}
+              </div>
+              <div className="musician">
+                {curVideo? curVideo.description : []}</div>
             </div>
             <div className="time">
               {isLoading ? `${currentTime} / ${totalTime}` : ""}
@@ -235,13 +260,16 @@ const MyMusicList = () => {
           </div>
 
           <div className="rightControl">
-            <button className="btn" onClick={() => player.unMute()}>
+            <button className="btn" onClick={() => handleMuteAndUnMute()}>
               <i className="fas fa-volume-up"></i>
             </button>
-            <button className="btn" onClick={() => player.unMute()}>
+            <button className="btn" onClick={() => handleMuteAndUnMute()}>
               <i className="fas fa-volume-mute"></i>
             </button>
-            <i className="fas fa-random"></i>
+            <i className="fas fa-random" onClick={()=> {
+              console.log("list: ", player.cuePlaylist(videoInfo, 0))
+              console.log("list: ", player.loadPlaylist(videoInfo, 0))
+              }}></i>
           </div>
         </div>
       </div>
