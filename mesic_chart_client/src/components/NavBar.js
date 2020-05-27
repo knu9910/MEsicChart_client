@@ -16,16 +16,16 @@ const navBar = (props) => {
   return (
     <div className="nav-bar">
       <div className="left-content">
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/" className="link" >
           <i className="fas fa-play-circle"></i>
           <span className="title">MEchart</span>
         </Link>
       </div>
       <div className="center-content">
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/" className="link" >
           <i className="fas fa-home"></i>
         </Link>
-        <Link to="/playlist" style={{ textDecoration: "none" }}>
+        <Link to="/playlist" className="link" >
           <i className="fas fa-record-vinyl"></i>
         </Link>
         <i className="fas fa-search" onClick = {() => document.getElementById("text1").style.display="block"}></i>
