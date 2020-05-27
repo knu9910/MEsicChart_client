@@ -5,12 +5,12 @@ import RecommandedMusicList from '../components/Main/RecommandedMusicList';
 import Footer from '../components/Footer';
 
 const Main = (props) => {
-  const {changeSignState, isSignIn, searchMusic, videos, changeMusicPlyer} = props;
+  const {onLogout, isSignIn, searchMusic, videos, changeMusicPlyer} = props;
   return (      
         <div className="main">
-            <NavBar isSignIn = {isSignIn} searchMusic = {searchMusic} changeSignState = {changeSignState}/>
+            <NavBar isSignIn = {isSignIn} searchMusic = {searchMusic} onLogout = {onLogout}/>
             <RecommandedMusicList videos = {videos} changeMusicPlyer = {changeMusicPlyer}/>
-            <Footer changeSignState = {changeSignState}
+            <Footer />
             isSignIn = {isSignIn}/>
         </div>
     );

@@ -11,7 +11,7 @@ class SignIn extends React.Component {
 
     this.state = {
       email: "",
-      password: "",
+      password: ""
     };
 
     this.handleInputValue = this.handleInputValue.bind(this);
@@ -24,17 +24,26 @@ class SignIn extends React.Component {
 
   responseGoogle = (res) => {
     const {email, name} = res.profileObj;
-    console.log(email,name)
     axios.post('http://3.34.124.39:3000/googleSignin', {
       email,
       name
-    })
+    }, {withCredentials:true})
     .then(res => {
       if(res.status === 201){
-        this.props.changeSignState();
-        this.props.history.push('/');
+        this.props.onLogin();
       }
     })
+    .catch(err => console.log(err));
+  }
+
+  kakaoLogin = () => {
+    axios.get('http://3.34.124.39:3000/kakao', {withCredentials:true})
+    .then(res => { 
+      if(res.status === 201){
+        this.props.onLogin();
+      }
+   })
+    .catch(err => console.log(err));
   }
 
   responseFail = (err) => {
@@ -52,15 +61,12 @@ class SignIn extends React.Component {
       console.log('reqSignIn() res: ', res)
       if(res.status === 201){
         alert('로그인 성공');
-        this.props.changeSignState();
-        this.props.history.push('/');
+        this.props.onLogin();
       } else if(res.status === 404){
         alert('email exists');
       } 
     })
-    .catch((err) => {
-      console.log("reqSignIn Error: ", err)
-    })
+    .catch(err => console.log("reqSignIn Error: ", err));
   }
 
   render() {
@@ -95,7 +101,7 @@ class SignIn extends React.Component {
             />
           </div>
           <div className="login-kakao">
-            <form action="http://3.34.124.39:3000/kakao" onClick = {this.changeSignState}>
+            <form action="http://3.34.124.39:3000/kakao" onClick={this.kakaoLogin}>
               <input type="submit" value="Sign in with KaKao" />
             </form>
           </div>
