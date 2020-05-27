@@ -9,7 +9,7 @@ const recommandedMusicList = (props) => {
     return (
         <div className="videos-field">
           <div className="recommended-Message">
-              추천 음악 리스트
+              Please Select Music
           </div>
           <div className="main-Videos">
               {videos}

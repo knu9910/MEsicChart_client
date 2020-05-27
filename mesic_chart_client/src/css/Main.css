@@ -1,5 +1,4 @@
 #root {
-    background-color: mistyrose;
 }
 .main {
     text-align : center;
@@ -42,83 +41,54 @@ input::-webkit-input-placeholder {
 }
 .recommended-Message {
     font-size: 60px;
-    font-family: 'Jua', sans-serif;
+    font-family: 'Fjalla One', sans-serif;    
     margin-top: 20px;
     margin-bottom: 20px;
-    color: crimson;
+    color: black;
 }
 .videos {
     width: 400px;
     height: 250px;
-    border-radius: 30px;
-    margin-bottom: 30px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    cursor: url(../images/cursor1.cur) 0 0, pointer;
+}
+.videos:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .video-field {
     display: inline-flex;
     flex-direction: column;
     width: 400px;
     justify-content: space-around;
+    margin-right: 60px;
 }
 .videoTitle {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
-    font-family: 'Jua', sans-serif;
-    color: crimson;
-    margin-bottom: 30px;
+    font-family: 'Noto Sans KR', sans-serif;    
+    color: black;
     white-space: pre-line;
     width: 400px;
     margin: 0 auto;
-    margin-bottom: 15px;
-}
-.go-List-Button {
-    width: 40%;
-    font-family: 'Jua', sans-serif;
-    font-size: 35px;
-    border-radius: 30px;
-}
-.signout-Button {
-    width: 40%;
-    font-size: 35px;
-    margin-left: 100px;
-    font-family: 'Jua', sans-serif;
-    border-radius: 30px;
+    margin-bottom: 30px;
 }
 .footer {
-    height: 80px;
+    display: grid;
+    grid-auto-flow: column;
+    height: 10vh;
     font-size: 25px;
     padding: 20px;
     background-color: #1d1d1d;
     color: #fff;
 }
-
-
-/*
-
-
-.temp {
-    min-width : 500px;
+.footer-playlist {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
 }
-.videos {
-    width: 400px;
-    height: 250px;
-    border-radius: 30px;
-    margin-bottom: 30px;
+.footer-signchange {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
 }
-.videoTitle {
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Jua', sans-serif;
-    color: crimson;
-    margin-bottom: 30px;
-    white-space: pre-line;
-    width: 400px;
-    margin: 0 auto;
-    margin-bottom: 15px;
-}
-.video-field {
-    display: inline-flex;
-    flex-direction: column;
-    width: 500px;
-    justify-content: space-around;
-}
-*/
