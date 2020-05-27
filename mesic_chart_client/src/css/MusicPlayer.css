@@ -1,0 +1,19 @@
+.wrapper {
+  padding-top: 70px;
+  display: grid;
+  justify-items: center;
+  height: 0;
+  grid-template-columns: 1fr;
+  grid-auto-flow: row;
+  gap: 20px;
+}
+
+.add-button {
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.embed-responsive-item {
+
+}
