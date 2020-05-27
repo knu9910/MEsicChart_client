@@ -11,12 +11,16 @@
 
 .left-content {
   width: 30vw;
+  text-align: left;
+  margin-left: 80px
 }
 
 .left-content i {
   margin-right: 10px;
 }
-
+.title {
+  font-size: 30px;
+}
 .link{
   text-decoration: none;
   color: #fff;
@@ -28,36 +32,53 @@
   justify-content: space-around;
   margin: 0 auto;
 }
+#text1 {
+  width : 400px;
+  height: 40px;
+  font-family: 'Noto Sans KR', sans-serif;  
+  font-size: 20px;
+  font-weight: bold;
+}
 
 .right-content {
   width: 30vw;
   display: flex;
   justify-content: flex-end;
 }
+.fas.fa-ellipsis-v {
+  margin-right: 40px;
+}
+.login-Icon {
+  width : 60px;
+  height: 60px;
+  color: white;
+  margin-top: 30px;
+  margin-left: -10px;
+}
 
-
-
+.logout-Icon {
+  width : 80px;
+  height: 60px;
+  color: white;
+  margin-top: 45px;
+  margin-left: -8px;
+  cursor: pointer;
+}
 .dropdown { position: relative; display: inline-block; }
 
 .dropdown-content {
-
-    display: none;
-
-    position: absolute;
-
-    background-color: #FFDAB9;
-
-    min-width: 70px;
-
-    padding: 8px;
-
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-
+  left : -30px;
+  display: none;
+  position: absolute;
+  width: 60px;
+  height : 140px;
+  padding: 8px;
+  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 }
 
-.dropdown-content a { color: black; padding: 8px; text-decoration: none; display: block; }
+.dropdown-content a { color: crimson; padding: 8px; text-decoration: none; display: block; }
 
-.dropdown-content a:hover { background-color: black; }
+.dropdown-content a:hover {}
 
 .dropdown:hover .dropdown-content { display: block; }
 

@@ -1,7 +1,7 @@
 require("dotenv").config();
 const fetch = require("node-fetch");
 const urlencode = require("urlencode");
-const key = process.env.REACT_APP_YOUTUBE_KEY;
+const key = "AIzaSyCi_mFY-CjwTDzhwPCdEvFPTYcHAb19yPE";
 const part = "snippet";
 const type = "video"; // 채널 아닌 비디오만
 const videoCategoryId = "10"; // 음악
