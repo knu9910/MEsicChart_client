@@ -23,7 +23,13 @@
 
 .list {
   width: 35vw;
+  height: 70vh;
   color: #fff;
+  overflow-x: hidden;
+}
+
+.list::-webkit-scrollbar{
+  display: none;
 }
 
 .top-bar {
@@ -46,17 +52,51 @@
 }
 
 .thumbnail {
+  width: 300px;
+  height: 90px;
   align-self: center;
+  background-image: url(https://i.ytimg.com/vi/TgOu00Mf3kI/sddefault.jpg);
+  background-size: cover;
+  /* background-position: center; */
+  border: 1px solid red;
 }
 
-.thumbnail img {
-  width: 40px;
-  height: 40px;
-}
+/* .thumbnail img { */
+  /* width: 40px;
+  height: 40px; */
+  /* width: 5vw;
+  height: 5vh; */
+/* } */
 
 .music-info {
   display: flex;
   flex-direction: column;
+
+  /* display: inline-block;
+  width: 25vw;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; */
+  /* display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden; */
+}
+
+.music-info .title {
+  font-size: 20px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.music-info .musician {
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .time {
@@ -64,6 +104,11 @@
 }
 
 /* playerBar */
+.playerBar{
+  position: sticky;
+  bottom: 0;
+}
+
 .btn {
   all: unset;
   padding: 0px 20px;
@@ -96,20 +141,7 @@
 }
 
 .controlsWrap {
-  /* position: fixed;
-  width: 100vw;
-  height: 7vh;
-  left: 0px;
-  bottom: 0px;
-  background-color: #1d1d1d;
-  display: flex;
-  align-items: center;
-  padding: 0px 50px;
   color: #909090;
-  font-size: 12px; */
-
-  color: #909090;
-
   width: 100%;
   height: 10vh;
   display: flex;
