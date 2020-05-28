@@ -2,6 +2,7 @@ import React from "react";
 import MyMusicListEntry from "./MyMusicListEntry";
 import YouTube from 'react-youtube';
 import axios from "axios";
+import "../../css/MyMusicList.css";
 
 let player;
 class MyMusicList extends React.Component {
@@ -10,21 +11,59 @@ class MyMusicList extends React.Component {
     this.state ={
       videoId: null,
       videos: [],
+      videoIndex: 0,
       totalTime: '0:00',
 
     }
   }
 
   async componentDidMount() {
-    const res = await axios.get('http://3.34.124.39:3000/musiclist',{ withCredentials: true });
+    const res = await axios.get('http://3.34.124.39:3000/musiclist', { withCredentials: true });
     const data = res.data;
+    console.log('res.data : ', data)
     const videoId = data[0].videoId;
+    this.setState({ videos: data });
     this.setState({ videoId });
   } 
 
-  handleVideoTitleClick = (videoId) => {
+  handleVideoTitleClick = (videoId, index) => {
+    console.log(index)
     // setCurVideo(video);
     player.loadVideoById(videoId, 0)
+    this.setState({ videoIndex: index })
+  };
+
+  handleDeleteVideo = videoId => {
+    axios.post('http://3.34.124.39:3000/delete', { videoId }, { withCredentials:true })
+      .then(data => {
+        console.log('음악을 삭제 했습니다.', data)
+        let deleteVideoIndex;
+        for(let i = 0; i < this.state.videos.length; i++) {
+          if(videoId === this.state.videos[i].videoId){
+            deleteVideoIndex = i;
+            break;
+          }
+        }
+        let newVideos = this.state.videos.slice();
+        newVideos.splice(deleteVideoIndex, 1)
+        this.setState({ videos: newVideos})
+      });
+  };
+
+  handleVideoBack = () => {
+    const { videos, videoIndex } = this.state;
+    if(videos[videoIndex - 1]) {
+      player.loadVideoById(videos[videoIndex - 1].videoId, 0)
+      this.setState({ videoIndex: videoIndex - 1 });
+    }
+  };
+
+  handleVideoNext = () => {
+    const { videos, videoIndex } = this.state;
+    if(videos[videoIndex + 1]) {
+      player.loadVideoById(videos[videoIndex + 1].videoId, 0)
+      this.setState({ videoIndex: videoIndex + 1 });
+    }
   };
 
 
@@ -41,7 +80,7 @@ class MyMusicList extends React.Component {
       heigth: '390',
       width: '640',
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
       },
     };
 
@@ -51,7 +90,7 @@ class MyMusicList extends React.Component {
       <div>
         <div className="musicList">
           <div className="player">
-            <YouTube videoId={this.state.videoId} opts={opts} onReady={this._onReady} id="player"/>
+            <YouTube videoId={this.state.videoId} opts={opts} onReady={this._onReady} className="player"/>
           </div>
 
           <div className="list">
@@ -59,17 +98,14 @@ class MyMusicList extends React.Component {
               <p>목록</p>
               <i className="fas fa-ellipsis-v"></i>
             </div>
-            <button onClick={()=> this.handleVideoTitleClick('ztmOmJrTF5c')}>눌러봐</button>
-            { 
-              videos ?
-              videos.map((video, index) => (
+            {/* <button onClick={()=> this.handleVideoTitleClick('ztmOmJrTF5c')}>눌러봐</button> */}
+            { videos ? videos.map((video, index) => (
                 <MyMusicListEntry 
-                  key={index} video={video} thumbnail={video.thumbnail} title={video.title} musician={video.description} totalTime={totalTime}
-                  handleVideoTitleClick={() => this.handleVideoTitleClick(this)}
-                  // handleDeleteVideo={handleDeleteVideo.bind(this)}
+                  key={index} video={video.videoId} index={index} thumbnail={video.thumbnail} title={video.title} musician={video.description} totalTime={totalTime}
+                  handleVideoTitleClick={this.handleVideoTitleClick}
+                  handleDeleteVideo={this.handleDeleteVideo}
                 />
-              )) : null
-            }
+              )) : null }
           </div>
         </div>
 
@@ -78,20 +114,20 @@ class MyMusicList extends React.Component {
           <div
             className="loadBar"
             // style={
-              // isLoading
-              //   ? {
-              //       width: mouseDragX
-              //         ? mouseDragX
-              //         : String(
-              //             (player.getCurrentTime() / player.getDuration()) * 100
-              //           ) + "vw",
+            //   isLoading
+            //     ? {
+            //         width: mouseDragX
+            //           ? mouseDragX
+            //           : String(
+            //               (player.getCurrentTime() / player.getDuration()) * 100
+            //             ) + "vw",
 
-              //       border:
-              //         activeButton || mouseDragX
-              //           ? "2px solid #db021f"
-              //           : "0px solid #db021f",
-              //     }
-              //   : { width: "0vw" }
+            //         border:
+            //           activeButton || mouseDragX
+            //             ? "2px solid #db021f"
+            //             : "0px solid #db021f",
+            //       }
+            //     : { width: "0vw" }
             // }
           >
             <button
@@ -106,7 +142,7 @@ class MyMusicList extends React.Component {
             <div className="leftControl">
               <button
                 className="btn"
-                // onClick={() => handleVideoBack()}
+                onClick={() => this.handleVideoBack()}
               >
                 <i className="fas fa-step-backward"></i>
               </button>
@@ -124,8 +160,7 @@ class MyMusicList extends React.Component {
               </button>
               <button
                 className="btn"
-                // onClick={() => player.seekTo(player.getCurrentTime() + 10, true)}
-                // onClick={() => handleVideoNext()}
+                onClick={() => this.handleVideoNext()}
               >
                 <i className="fas fa-step-forward"></i>
               </button>
