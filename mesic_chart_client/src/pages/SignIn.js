@@ -3,17 +3,16 @@ import { Link, withRouter } from "react-router-dom";
 import axios from 'axios'
 import { GoogleLogin } from 'react-google-login';
 import "../css/SignIn.css";
+import swal from "sweetalert";
 require('dotenv').config();
 
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
       password: ""
     };
-
     this.handleInputValue = this.handleInputValue.bind(this);
     this.reqSignIn = this.reqSignIn.bind(this)
   }
@@ -50,7 +49,6 @@ class SignIn extends React.Component {
     console.log(err)
   } 
   reqSignIn = e => {
-    console.log("reqSignIn 진입");
 
     e.preventDefault();
     axios.post('http://3.34.124.39:3000/signin', {
@@ -58,12 +56,10 @@ class SignIn extends React.Component {
       password: this.state.password
     }, {withCredentials:true})
     .then((res) => {
-      console.log('reqSignIn() res: ', res)
       if(res.status === 201){
-        alert('로그인 성공');
         this.props.onLogin();
       } else if(res.status === 404){
-        alert('email exists');
+        swal({text:'존재하지 않는 아이디 이거나, 비밀번호가 틀렸습니다.', icon:'error'});
       } 
     })
     .catch(err => console.log("reqSignIn Error: ", err));

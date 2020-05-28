@@ -6,20 +6,19 @@ import SignIn from "./pages/SignIn";
 import PlayList from "./pages/PlayList";
 import { searchMusicsByText } from "./youtubeApi/searchMusicsByText";
 import { getRecommendedPlaylist } from './youtubeApi/getRecommendedPlaylist';
-import MusicPlyer from "./pages/MusicPlyer";
+import MusicPlayer from "./pages/MusicPlayer";
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isSignIn: true,
       videos:[],
       video:null
     };
     this.searchMusic = this.searchMusic.bind(this);
-    this.changeMusicPlyer = this.changeMusicPlyer.bind(this);
+    this.changeMusicPlyer = this.changeMusicPlayer.bind(this);
     this.onLogin = this.onLogin.bind(this);
     this.onLogout = this.onLogout.bind(this);
   }
@@ -38,27 +37,28 @@ class App extends React.Component {
     searchMusicsByText(query, 8)
     .then(res => res.json())
     .then((json) => {
-        console.log(json)
       const videos = json.items
       this.setState({videos})
     }) 
     .catch(err => console.log(err));
   }
 
-  changeMusicPlyer(video){
+  changeMusicPlayer(video){
     this.setState({video});
-    this.props.history.push('/musicPlyer');
+    window.localStorage.setItem('player', JSON.stringify(video));
+    this.props.history.push('/musicPlayer');
   }
 
   componentDidMount() {
     const id = window.localStorage.getItem('id');
+    const get = window.localStorage.getItem('player');
+    const video = JSON.parse(get); 
     let isSignIn = id ? true : false;  
     getRecommendedPlaylist(8)
     .then((res) => res.json())
     .then((json) => {
-        console.log(json.items[0])
       const videos = json.items
-      this.setState({videos, isSignIn})
+      this.setState({videos, isSignIn, video})
     }) 
     .catch((err) => console.log(err));
   }
@@ -83,7 +83,7 @@ class App extends React.Component {
           />
           <Route exact path="/playlist" render={() => <PlayList isSignIn={isSignIn} searchMusic={this.searchMusic} onLogout={this.onLogout}/>} />
           <Route exact path="/" render={() => <Main isSignIn={isSignIn} onLogout={this.onLogout} searchMusic={this.searchMusic} videos={videos} changeMusicPlyer={this.changeMusicPlyer}/>} />
-          <Route exact path="/musicPlyer" render={() => <MusicPlyer isSignIn={isSignIn} video = {video} searchMusic={this.searchMusic} onLogout={this.onLogout}/>} />
+          <Route exact path="/musicPlayer" render={() => <MusicPlayer isSignIn={isSignIn} video = {video} searchMusic={this.searchMusic} onLogout={this.onLogout}/>} />
         </Switch>
       </div>
     );

@@ -5,7 +5,7 @@ const MusicEntry = (props) => {
     const videoTitle = props.video.snippet.title;
     return (
     <span className="video-field">
-        <img className="videos" src= {`http://img.youtube.com/vi/${videoId}/mqdefault.jpg`} onClick = {() => props.changeMusicPlyer(props.video)}/>
+        <img className="videos" src= {`http://img.youtube.com/vi/${videoId}/mqdefault.jpg`} onClick = {() => props.changeMusicPlayer(props.video)}/>
         <span className="videoTitle">
             {videoTitle}
         </span>
