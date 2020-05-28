@@ -20,6 +20,8 @@
 }
 .title {
   font-size: 30px;
+  text-decoration: none;
+  color: #fff;
 }
 .link{
   text-decoration: none;
@@ -39,8 +41,8 @@
   font-weight: bold;
 }
 .fas.fa-search {
-  margin-left: -40px;
-  margin-top: 10px;
+  margin-left: 10px;
+  margin-top: 8.6px;
   cursor: pointer;
 }
 .right-content {

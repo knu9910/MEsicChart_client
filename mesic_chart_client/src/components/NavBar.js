@@ -26,10 +26,8 @@ const navBar = (props) => {
   return (
     <div className="nav-bar">
       <div className="left-content">
-        <Link to="/" className="link" >
           <i className="fas fa-play-circle"></i>
-          <span className="title">MEsic Chart</span>
-        </Link>
+          <a href="/" className="title">MEsic Chart</a>
       </div>
       <div className="center-content">
         <input type="text" name="text1" id="text1" onKeyDown = {handleKeyPress} placeholder="  검색어를 입력해주세요"/>

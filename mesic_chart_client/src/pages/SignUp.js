@@ -16,19 +16,15 @@ class signUp extends React.Component {
 
   insertId = value => {
     this.setState({ id: value });
-    console.log(value)
   }
   insertPassword = value => {
     this.setState({ password: value });
-    console.log(value)
   }
   insertPassword2 = value => {
     this.setState({ password2: value });
-    console.log(value)
   }
   insertName = value => {
     this.setState({ name: value });
-    console.log(value)
   }
   onButtonClick = () => {
     // console.log('buttonclicked');
