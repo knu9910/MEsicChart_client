@@ -20,6 +20,7 @@ const MyMusicList = () => {
 
   const [videoInfo, setVideoInfo] = useState([]);
   const [curVideo, setCurVideo] = useState(null);
+  const [videoIndex, setoVideoIndex] = useState(0);
 
   const onPlayerReady = () => {
     console.log("onPlayerReady 진입");
@@ -80,6 +81,24 @@ const MyMusicList = () => {
     console.log("후 curVideo: ", curVideo)
   };
 
+  const handleVideoNext = () => {
+    console.log("handleVideoNext 성공");
+
+    if(videoInfo[videoIndex+1]){
+      player.loadVideoById(videoInfo[videoIndex + 1].videoId, 0)
+      setoVideoIndex(videoIndex+1)
+    }
+  };
+
+  const handleVideoBack = () => {
+    console.log("handleVideoBack 성공");
+
+    if(videoInfo[videoIndex-1]){
+      player.loadVideoById(videoInfo[videoIndex - 1].videoId, 0)
+      setoVideoIndex(videoIndex-1)
+    }
+  };
+
   const handlePlayAndPause = () => {
     console.log("handlePlayAndPause 진입");
       if (!isPlaying) {
@@ -107,15 +126,37 @@ const MyMusicList = () => {
     }
   }
 
-  const handleListInsert = () => {
-    console.log("handleListInsert 진입");
+  const handleShuffle = () => {
+    console.log("handleShuffle 진입")
+    var j, x, i;
+    for (i = videoInfo.length; i; i -= 1) {
+      j = Math.floor(Math.random() * i);
+      x = videoInfo[i - 1];
+      videoInfo[i - 1] = videoInfo[j];
+      videoInfo[j] = x;
+    }
 
-    player.cuePlaylist(videoInfo, 0)
+    player.loadVideoById(videoInfo[0].videoId, 0)
   }
 
-  const handleNextVideo = () => {
-    console.log("handleNextVideo 진입");
-    player.nextVideo();
+  const handleDeleteVideo = (video) => {
+    axios.post("http://3.34.124.39:3000/delete", {videoId: video.videoId}, {withCredentials:true})
+    .then(data => {
+      console.log("data: ", data)
+      console.log("delete 성공")
+      let deletedVideoIndex = 0;
+      for(let i = 0; i < videoInfo.length; i++){
+        if(video.videoId === videoInfo[i].videoId){
+          deletedVideoIndex = i
+          break
+        }
+      }
+      let tmpArr = videoInfo.slice();
+      tmpArr.splice(deletedVideoIndex, 1)
+      setVideoInfo(tmpArr)
+      console.log("videoInfo: ", videoInfo)
+      console.log("tmpArr: ", tmpArr)
+    })
   }
 
   useEffect(() => {
@@ -123,7 +164,7 @@ const MyMusicList = () => {
       axios.get("http://3.34.124.39:3000/musiclist").then((res) => {
         console.log("res.data: ", res.data);
         setVideoInfo(res.data);
-        setCurVideo(res.data[2]);
+        setCurVideo(res.data[0]);
       });
     } else {
       if (window.YT) {
@@ -137,6 +178,7 @@ const MyMusicList = () => {
             // videoId: "BfWqUjunXXU",
             host: "https://www.youtube.com",
             playerVars: {
+              autoplay: 1,
               controls: 0,
               enablejsapi: 1,
               origin: 1,
@@ -157,7 +199,7 @@ const MyMusicList = () => {
         clearInterval(checkCurrentTime);
       };
     }
-  }, [checkCurrentTime, curVideo, onPlayerReady]);
+  }, [videoInfo, curVideo, checkCurrentTime, onPlayerReady]);
 
   return (
     <div>
@@ -179,6 +221,7 @@ const MyMusicList = () => {
               musician={video.description}
               totalTime={totalTime}
               handleVideoTitleClick={handleVideoTitleClick.bind(this)}
+              handleDeleteVideo={handleDeleteVideo.bind(this)}
             />
           ))}
         </div>
@@ -217,14 +260,13 @@ const MyMusicList = () => {
           <div className="leftControl">
             <button
               className="btn"
-              onClick={() => player.seekTo(player.getCurrentTime() - 10, true)}
+              onClick={() => handleVideoBack()}
             >
               <i className="fas fa-step-backward"></i>
             </button>
             <button
               className="btn"
               onClick={() => {
-                console.log("curVideo: ", curVideo)
                 handlePlayAndPause()
               }}
             >
@@ -237,7 +279,7 @@ const MyMusicList = () => {
             <button
               className="btn"
               // onClick={() => player.seekTo(player.getCurrentTime() + 10, true)}
-              onClick={() => handleNextVideo()}
+              onClick={() => handleVideoNext()}
             >
               <i className="fas fa-step-forward"></i>
             </button>
@@ -266,10 +308,10 @@ const MyMusicList = () => {
             <button className="btn" onClick={() => handleMuteAndUnMute()}>
               <i className="fas fa-volume-mute"></i>
             </button>
-            <i className="fas fa-random" onClick={()=> {
-              console.log("list: ", player.cuePlaylist(videoInfo, 0))
-              console.log("list: ", player.loadPlaylist(videoInfo, 0))
-              }}></i>
+            <button className="btn" onClick={()=> handleShuffle()}>
+            <i className="fas fa-random" ></i>
+            </button>
+            
           </div>
         </div>
       </div>
