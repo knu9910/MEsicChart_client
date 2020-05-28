@@ -12,8 +12,9 @@ class MyMusicList extends React.Component {
       videoId: null,
       videos: [],
       videoIndex: 0,
+      isPlaying: true,
+      activeButton: false,
       totalTime: '0:00',
-
     }
   }
 
@@ -66,21 +67,53 @@ class MyMusicList extends React.Component {
     }
   };
 
+  handlePlayAndPause = () => {
+    if(!this.state.isPlaying) {   
+      player.playVideo();
+      this.setState({ isPlaying: true });
+    } else {
+      player.pauseVideo();
+      this.setState({ isPlaying: false });
+    }
+  };
 
+  handleMuteAndUnMute = (isMute) => {
+    if(!isMute){
+      player.mute();
+      this.setState({ activeButton: true });
+    } else {
+      player.unMute();
+      this.setState({ activeButton: false });
+    }
+    // const { activeButton } = this.state;
+    // if(!activeButton){
+    //   player.mute();
+    //   this.setState({ activeButton: true });
+    // } else {
+    //   player.unMute();
+    //   this.setState({ activeButton: false });
+    // }
+  }
 
-
-
-
-
-
-
+  handleShuffle = () => {
+    const { videos, videoIndex } = this.state;
+    var j, x, i;
+    for (i = videos.length; i; i -= 1) {
+      j = Math.floor(Math.random() * i);
+      x = videos[i - 1];
+      videos[i - 1] = videos[j];
+      videos[j] = x;
+    }
+    player.loadVideoById(videos[0].videoId, 0)
+    this.setState({ videoIndex: 0 });
+  }
 
   render() {
     const opts = {
       heigth: '390',
       width: '640',
       playerVars: {
-        autoplay: 0,
+        autoplay: 1,
       },
     };
 
@@ -140,42 +173,26 @@ class MyMusicList extends React.Component {
           </div>
           <div className="controlsWrap">
             <div className="leftControl">
-              <button
-                className="btn"
-                onClick={() => this.handleVideoBack()}
-              >
+              <button className="btn" onClick={() => this.handleVideoBack()}>
                 <i className="fas fa-step-backward"></i>
               </button>
-              <button
-                className="btn"
-                // onClick={() => {
-                //   handlePlayAndPause()
-                // }}
-              >
-                {/* {isPlaying ? (
-                  <i className="fas fa-pause"></i>
-                ) : (
-                  <i className="fas fa-play"></i>
-                )} */}
+              <button className="btn" onClick={() => this.handlePlayAndPause()}>
+                { this.state.isPlaying ? <i className="fas fa-pause"></i> : <i className="fas fa-play"></i> }
               </button>
-              <button
-                className="btn"
-                onClick={() => this.handleVideoNext()}
-              >
+              <button className="btn" onClick={() => this.handleVideoNext()}>
                 <i className="fas fa-step-forward"></i>
               </button>
             </div>
 
             <div className="musicInfo">
               <div className="thumbnail">
-                {/* <img src={curVideo? curVideo.thumbnail : ""} /> */}
               </div>
               <div className="music-info">
                 <div className="title">
-                  {/* {curVideo? curVideo.title : null} */}
+                  { videos[this.state.videoIndex] ? videos[this.state.videoIndex].title : null }
                 </div>
                 <div className="musician">
-                  {/* {curVideo? curVideo.description : []} */}
+                  { videos[this.state.videoIndex] ? videos[this.state.videoIndex].description : [] }
                 </div>
               </div>
               <div className="time">
@@ -183,18 +200,18 @@ class MyMusicList extends React.Component {
               </div>
             </div>
 
-            {/* <div className="rightControl">
-              <button className="btn" onClick={() => handleMuteAndUnMute()}>
+            <div className="rightControl">
+              <button className="btn" onClick={() => this.handleMuteAndUnMute(true)}>
                 <i className="fas fa-volume-up"></i>
               </button>
-              <button className="btn" onClick={() => handleMuteAndUnMute()}>
+              <button className="btn" onClick={() => this.handleMuteAndUnMute(false)}>
                 <i className="fas fa-volume-mute"></i>
               </button>
-              <button className="btn" onClick={()=> handleShuffle()}>
-              <i className="fas fa-random" ></i>
+              <button className="btn" onClick={()=> this.handleShuffle()}>
+                <i className="fas fa-random" ></i>
               </button>
               
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
