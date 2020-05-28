@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 export let player;
 
 const MyMusicList = () => {
-  const [isPlaying, setPlaying] = useState(false);
+  const [isPlaying, setPlaying] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState("0:00");
   const [totalTime, setTotalTime] = useState("0:00");
@@ -18,7 +18,7 @@ const MyMusicList = () => {
   const [activeButton, setactiveButton] = useState(false);
   let checkCurrentTime;
 
-  const [videoInfo, setVideoInfo] = useState([]);
+  const [videoInfo, setVideoInfo] = useState(null);
   const [curVideo, setCurVideo] = useState(null);
   const [videoIndex, setoVideoIndex] = useState(0);
 
@@ -33,11 +33,14 @@ const MyMusicList = () => {
   const onPlayerStateChange = (e) => {
     console.log("onPlayerStateChange 진입")
     console.log(e.data);
-    // if (e.data === 1) {
-    //   setPlaying(true);
-    // } else if (e.data === 2) {
-    //   setPlaying(false);
-    // }
+    if (e.data === -1) {
+      // handleVideoNext();
+    } else if(e.data === 1) {
+      console.log('음악이 시작될 때')
+      setTime();
+    } else if(e.data === 3) {
+
+    }
   };
 
   const transTime = (seconds) => {
@@ -56,6 +59,7 @@ const MyMusicList = () => {
 
   const setTime = () => {
     setCurrentTime(transTime(player.getCurrentTime().toFixed()));
+    console.log('음악이 시작된 시간', currentTime);
   };
 
   const dragHandler = (e) => {
@@ -119,7 +123,7 @@ const MyMusicList = () => {
       console.log("mute: ", activeButton)
       player.mute();
       setactiveButton(true)
-    }else{
+    } else {
       console.log("unMute: ", activeButton)
       player.unMute();
       setactiveButton(false)
@@ -158,23 +162,26 @@ const MyMusicList = () => {
       console.log("tmpArr: ", tmpArr)
     })
   }
-
+  
   useEffect(() => {
-    if (curVideo === null) {
+    if (videoInfo === null) {
+      console.log('useEffect 진입 - 마운트 이후')
       axios.get("http://3.34.124.39:3000/musiclist").then((res) => {
         console.log("res.data: ", res.data);
+        res.data.sort((a, b) => a - b);
         setVideoInfo(res.data);
         setCurVideo(res.data[0]);
       });
     } else {
+      console.log('useEffect 진입 - get 요청 이후')
       if (window.YT) {
-        console.log(window.YT);
-        console.log("curVideo: ", curVideo.videoId);
+        // console.log(window.YT);
+        // console.log("curVideo: ", curVideo.videoId);
         window.onYouTubeIframeAPIReady = () => {
           player = new window["YT"].Player("player", {
             height: "380",
             width: "700",
-            videoId: curVideo.videoId,
+            videoId: videoInfo[0].videoId,
             // videoId: "BfWqUjunXXU",
             host: "https://www.youtube.com",
             playerVars: {
@@ -199,7 +206,7 @@ const MyMusicList = () => {
         clearInterval(checkCurrentTime);
       };
     }
-  }, [videoInfo, curVideo, checkCurrentTime, onPlayerReady]);
+  }, [checkCurrentTime, onPlayerReady, onPlayerStateChange, videoInfo]); // curVideo 
 
   return (
     <div>
@@ -213,17 +220,21 @@ const MyMusicList = () => {
             <p>목록</p>
             <i className="fas fa-ellipsis-v"></i>
           </div>
-          {videoInfo.map((video, index) => (
-            <MyMusicListEntry key={index}
-              video={video}
-              thumbnail={video.thumbnail}
-              title={video.title}
-              musician={video.description}
-              totalTime={totalTime}
-              handleVideoTitleClick={handleVideoTitleClick.bind(this)}
-              handleDeleteVideo={handleDeleteVideo.bind(this)}
-            />
-          ))}
+          { 
+            videoInfo ?
+            videoInfo.map((video, index) => (
+              <MyMusicListEntry 
+                key={index}
+                video={video}
+                thumbnail={video.thumbnail}
+                title={video.title}
+                musician={video.description}
+                totalTime={totalTime}
+                handleVideoTitleClick={handleVideoTitleClick.bind(this)}
+                handleDeleteVideo={handleDeleteVideo.bind(this)}
+              />
+            )) : null
+          }
         </div>
       </div>
 
