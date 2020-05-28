@@ -52,8 +52,11 @@ class signUp extends React.Component {
     } else if(name === '') {
       swal({
         text: '이름이 비어 있습니다.',
-        icon : "success",});
+        icon : "error",});
     } else { // 통과 했을 경우에만 요청
+      swal({
+        text: '회원가입에 성공했습니다.',
+        icon : "success",});
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       var raw = JSON.stringify({

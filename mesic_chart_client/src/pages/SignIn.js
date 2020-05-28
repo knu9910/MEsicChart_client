@@ -33,6 +33,7 @@ class SignIn extends React.Component {
       }
     })
     .catch(err => console.log(err));
+    
   }
 
   kakaoLogin = () => {
@@ -59,7 +60,8 @@ class SignIn extends React.Component {
       if(res.status === 201){
         this.props.onLogin();
       } else if(res.status === 404){
-        swal({text:'존재하지 않는 아이디 이거나, 비밀번호가 틀렸습니다.', icon:'error'});
+        swal({
+          text:'존재하지 않는 아이디 이거나, 비밀번호가 틀렸습니다.', icon:'error',});
       } 
     })
     .catch(err => console.log("reqSignIn Error: ", err));
