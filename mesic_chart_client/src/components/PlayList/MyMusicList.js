@@ -26,12 +26,12 @@ class MyMusicList extends React.Component {
     const res = await axios.get('http://3.34.124.39:3000/musiclist', { withCredentials: true });
     const data = res.data;
     console.log('res.data : ', data)
-
-    data.sort((a, b) => b.playtime - a.playtime);
-    const videoId = data[0].videoId;
-    this.setState({ videos: data });
-    this.setState({ videoId });
-
+    if(data.length !== 0) {
+      data.sort((a, b) => b.playtime - a.playtime);
+      const videoId = data[0].videoId;
+      this.setState({ videos: data });
+      this.setState({ videoId });
+    }
   } 
 
   handleVideoTitleClick = (videoId, index) => {
@@ -133,8 +133,7 @@ class MyMusicList extends React.Component {
       playTimeBegin: 0,
       playTime: 0
     })
-    // console.log('this.state.playtime : ', this.state.playTime)
-    // console.log(this.state.videos[this.state.videoIndex].videoId, totalPlaytime)
+
     axios.post('http://3.34.124.39:3000/writeplaytime', {
       "videoId": this.state.videos[this.state.videoIndex].videoId,
       "playtime": playtime
@@ -143,11 +142,6 @@ class MyMusicList extends React.Component {
         console.log('playtime을 기록했습니다.', data.data.playtime)
         
       });
-    // if(this.state.isPlayingForPlayTime) {
-    //   const currentTime = new Date().getTime();
-    //   const playtime = currentTime - this.state.playTimeBegin;
-    //   this.setState({ playTime: playtime })
-    // }
   }
 
   render() {
@@ -171,13 +165,11 @@ class MyMusicList extends React.Component {
               onPause={() => this.handlePause()}  
             />
           </div>
-
           <div className="list">
             <div className="top-bar">
               <p>많이 재생한 순서</p>
-              {/* <i className="fas fa-ellipsis-v"></i> */}
+             
             </div>
-            {/* <button onClick={()=> this.handleVideoTitleClick('ztmOmJrTF5c')}>눌러봐</button> */}
             { videos ? videos.map((video, index) => (
                 <MyMusicListEntry 
                   key={index} video={video.videoId} index={index} thumbnail={video.thumbnail} title={video.title} musician={video.description} totalTime={totalTime}
@@ -192,29 +184,10 @@ class MyMusicList extends React.Component {
         <div className="playerBar">
           <div
             className="loadBar"
-            // style={
-            //   isLoading
-            //     ? {
-            //         width: mouseDragX
-            //           ? mouseDragX
-            //           : String(
-            //               (player.getCurrentTime() / player.getDuration()) * 100
-            //             ) + "vw",
 
-            //         border:
-            //           activeButton || mouseDragX
-            //             ? "2px solid #db021f"
-            //             : "0px solid #db021f",
-            //       }
-            //     : { width: "0vw" }
-            // }
           >
             <button
               className="dragBtn"
-              // style={{ opacity: activeButton || mouseDragX ? "1" : "0" }}
-              // onMouseOver={() => setactiveButton(true)}
-              // onMouseOut={() => setactiveButton(false)}
-              // onMouseDown={drag}
             />
           </div>
           <div className="controlsWrap">
