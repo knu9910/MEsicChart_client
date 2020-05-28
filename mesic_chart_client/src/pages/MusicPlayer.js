@@ -47,7 +47,8 @@ const MusicPlayer = (props) => {
     }
   }
 
-  const { searchMusic, onLogout, isSignIn, video } = props;
+  const { searchMusic, onLogout, isSignIn, video, description } = props;
+  console.log('description', description)
   console.log(video);
   let videoId, title;
   if(video) {
@@ -67,7 +68,7 @@ const MusicPlayer = (props) => {
           allowFullScreen width="960" height="447"></iframe>
         <img src={musicAdd} className="add-icon" onClick={postMusicToPlaylist} />
         <div className="player-title">{title}</div>
-        <div className="description">{description}</div>
+        <div className="player-description">{description}</div>
       </div>
       <div className="player-footer"></div>
     </div>

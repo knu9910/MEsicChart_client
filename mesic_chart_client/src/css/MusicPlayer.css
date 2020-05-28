@@ -1,5 +1,9 @@
-.wrapper {
-
+.player-wrapper {
+  padding-top: 70px;
+  display: grid;	  
+  display: grid;
+  justify-items: center;
+  grid-auto-columns: 1fr;
 }
 
 .add-icon {
@@ -15,7 +19,7 @@
   font-family: 'Fjalla One', sans-serif;
   background-color: lightseagreen;
 }
-.description {
+.player-description {
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
   width: 960px;
