@@ -69,7 +69,8 @@ class signUp extends React.Component {
         method: 'POST',
         headers: myHeaders,
         body: raw,
-        redirect: 'follow'
+        redirect: 'follow',
+        credentials: 'include'
       };
       fetch("http://3.34.124.39:3000/signup", requestOptions)
         .then(response => {
@@ -135,7 +136,6 @@ class signUp extends React.Component {
               <div>
                 <button className="submit" onClick={() => this.onButtonClick()}>Signup</button>
               </div>
-            
             </div>
           </header>
         </div>

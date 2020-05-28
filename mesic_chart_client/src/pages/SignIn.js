@@ -33,7 +33,6 @@ class SignIn extends React.Component {
       }
     })
     .catch(err => console.log(err));
-    
   }
 
   kakaoLogin = () => {
