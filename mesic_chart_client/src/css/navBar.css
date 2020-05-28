@@ -25,28 +25,38 @@
   text-decoration: none;
   color: #fff;
 }
-
 .center-content {
-  width: 40vw;
+  width: 700px;
   display: flex;
   justify-content: space-around;
   margin: 0 auto;
 }
 #text1 {
-  width : 400px;
+  width : 600px;
   height: 40px;
   font-family: 'Noto Sans KR', sans-serif;  
   font-size: 20px;
   font-weight: bold;
 }
-
+.fas.fa-search {
+  margin-left: -40px;
+  margin-top: 10px;
+  cursor: pointer;
+}
 .right-content {
   width: 30vw;
   display: flex;
   justify-content: flex-end;
 }
+.fas.fa-home {
+  margin-right: 40px;
+}
+.fas.fa-record-vinyl {
+  margin-right: 40px;
+}
 .fas.fa-ellipsis-v {
   margin-right: 40px;
+  cursor: pointer;
 }
 .login-Icon {
   width : 60px;

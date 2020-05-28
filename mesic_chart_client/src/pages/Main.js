@@ -11,7 +11,6 @@ const Main = (props) => {
             <NavBar isSignIn = {isSignIn} searchMusic = {searchMusic} onLogout = {onLogout}/>
             <RecommandedMusicList videos = {videos} changeMusicPlyer = {changeMusicPlyer}/>
             <Footer />
-            isSignIn = {isSignIn}/>
         </div>
     );
     
