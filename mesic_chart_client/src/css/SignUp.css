@@ -4,14 +4,26 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    cursor: auto;
 }
-
+.swal-overlay {    
+}
 .SignUp-header {
     text-align : center;
     display: grid;
     justify-items: center;
     width: 370px;
 }
+.swal-text {
+    font-size : 19px;
+    font-weight: bold;
+    font-family: 'Jua', sans-serif; 
+}
+.swal-modal {
+    border: 3px solid black;
+    border-radius: 30px;
+}  
+
 input::placeholder {
     color: black;
     opacity: 1; /* 파이어폭스에서 뿌옇게 나오는 현상을 방지하기 위한 css */
@@ -71,7 +83,6 @@ input::placeholder {
     cursor: pointer;
     transition: 0.3s;
     transition-property: background;
-
   }
   
 .submit:hover,
