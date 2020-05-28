@@ -65,12 +65,11 @@ const MusicPlayer = (props) => {
         <iframe className="embed-responsive-item"
           src={"https://www.youtube.com/embed/"+ videoId + "?autoplay=1"} 
           allowFullScreen width="960" height="447"></iframe>
-        <div>
-          <img src={musicAdd} className="add-icon" onClick={postMusicToPlaylist} />
-          <div className="제목">{title}</div>
-          <div className="player-footer"></div>
-        </div>
+        <img src={musicAdd} className="add-icon" onClick={postMusicToPlaylist} />
+        <div className="player-title">{title}</div>
+        <div className="description">{description}</div>
       </div>
+      <div className="player-footer"></div>
     </div>
     );
 }
