@@ -6,7 +6,7 @@ import loginIcon from "../images/login-icon.png";
 import logoutIcon from "../images/logout-icon2.png";
 
 const navBar = (props) => {
-  const {searchMusic, changeSignState, isSignIn} = props;
+  const {searchMusic, onLogout, isSignIn} = props;
   const handleKeyPress = (e) => {
     if(e.key === 'Enter') {
       console.log(e)
@@ -19,8 +19,7 @@ const navBar = (props) => {
   }
   const signOutEvent = () => {
     axios.get('http://3.34.124.39:3000/signout',{withCredentials:true})
-    changeSignState();
-    props.history.push('/');
+    onLogout();
   }
   let signState = isSignIn ? <div className = "signout" onClick = {signOutEvent}><img src={logoutIcon} className="logout-Icon"/></div> : <a className = "signin" href='/signin'><img src={loginIcon} className="login-Icon"/></a>
   
