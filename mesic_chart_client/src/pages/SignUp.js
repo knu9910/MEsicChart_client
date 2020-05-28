@@ -70,7 +70,6 @@ class signUp extends React.Component {
         body: raw,
         redirect: 'follow'
       };
-
       fetch("http://3.34.124.39:3000/signup", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))

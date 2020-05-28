@@ -59,9 +59,13 @@ class SignIn extends React.Component {
     .then((res) => {
       if(res.status === 201){
         this.props.onLogin();
-      } else if(res.status === 404){
         swal({
-          text:'존재하지 않는 아이디 이거나, 비밀번호가 틀렸습니다.', icon:'error',});
+          text: '로그인에 성공하였습니다.',
+          icon : "success",})
+      } else if(res.status === 404){   
+        swal({
+          text: '이메일이 맞지 않거나 비밀번호가 맞지 않습니다.',
+          icon : "error",})
       } 
     })
     .catch(err => console.log("reqSignIn Error: ", err));

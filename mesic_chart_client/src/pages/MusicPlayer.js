@@ -3,7 +3,7 @@ import NavBar from '../components/NavBar';
 import "../css/MusicPlayer.css"
 import axios from 'axios'
 import swal from "sweetalert";
-import musicAdd from "../images/musicAdd3.png" 
+import musicAdd from "../images/musicAdd2.png" 
 
 const MusicPlayer = (props) => {
  
@@ -61,9 +61,10 @@ const MusicPlayer = (props) => {
           src={"https://www.youtube.com/embed/"+ videoId + "?autoplay=1"} 
           allowFullScreen width="960" height="447"></iframe>
         <div>
+          <img src={musicAdd} className="add-icon" onClick={postMusicToPlaylist} />
           <div className="제목">{title}</div>
           <div className="description">{description}</div>
-          <img src={musicAdd} className="add-icon" onClick={postMusicToPlaylist} />
+          <div className="player-footer"></div>
         </div>
       </div>
     </div>
