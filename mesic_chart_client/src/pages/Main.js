@@ -2,7 +2,7 @@ import React from 'react';
 import "../css/Main.css"
 import NavBar from '../components/NavBar';
 import RecommandedMusicList from '../components/Main/RecommandedMusicList';
-import Footer from '../components/Footer';
+
 
 const Main = (props) => {
   const {onLogout, isSignIn, searchMusic, videos, changeMusicPlyer} = props;
@@ -10,7 +10,7 @@ const Main = (props) => {
         <div className="main">
             <NavBar isSignIn = {isSignIn} searchMusic = {searchMusic} onLogout = {onLogout}/>
             <RecommandedMusicList videos = {videos} changeMusicPlyer = {changeMusicPlyer}/>
-            <Footer />
+            <div className="main-footer"></div>
         </div>
     );
     

@@ -49,20 +49,19 @@ const MusicPlayer = (props) => {
 
   const { searchMusic, onLogout, isSignIn, video } = props;
   console.log(video);
-  let videoId, title, description;
+  let videoId, title;
   if(video) {
     videoId = video.snippet.resourceId ? video.snippet.resourceId.videoId : video.id.videoId;
     title = props.video.snippet.title;
-    description = props.video.snippet.description;
+    
   } else {
     videoId = null;
   }
   
-  console.log(title);
   return (
     <div>
       <NavBar searchMusic={searchMusic} onLogout={onLogout} isSignIn={isSignIn}/>
-      <div className="wrapper">
+      <div className="player-wrapper">
         <iframe className="embed-responsive-item"
           src={"https://www.youtube.com/embed/"+ videoId + "?autoplay=1"} 
           allowFullScreen width="960" height="447"></iframe>
