@@ -75,7 +75,9 @@ class App extends React.Component {
     return (
       <div>
         <Switch>
-          <Route exact path="/signup" render={() => <SignUp />} />
+          <Route exact 
+            path="/signup" 
+            render={() => <SignUp onLogin={this.onLogin} />} />
           <Route
             exact
             path="/signin"

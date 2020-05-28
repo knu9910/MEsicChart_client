@@ -37,13 +37,7 @@ class SignIn extends React.Component {
   }
 
   kakaoLogin = () => {
-    axios.get('http://3.34.124.39:3000/kakao', {withCredentials:true})
-    .then(res => { 
-      if(res.status === 201){
-        this.props.onLogin();
-      }
-   })
-    .catch(err => console.log(err));
+    this.props.onLogin()
   }
 
   responseFail = (err) => {
@@ -63,12 +57,12 @@ class SignIn extends React.Component {
           text: '로그인에 성공하였습니다.',
           icon : "success",})
       } else if(res.status === 404){   
-        swal({
-          text: '이메일이 맞지 않거나 비밀번호가 맞지 않습니다.',
-          icon : "error",})
       } 
     })
-    .catch(err => console.log("reqSignIn Error: ", err));
+    .catch(err => swal({
+      text: '이메일이 맞지 않거나 비밀번호가 맞지 않습니다.',
+      icon : "error",})
+   );
   }
 
   render() {

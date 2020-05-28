@@ -3,7 +3,8 @@ import NavBar from '../components/NavBar';
 import "../css/MusicPlayer.css"
 import axios from 'axios'
 import swal from "sweetalert";
-import musicAdd from "../images/musicAdd2.png" 
+import musicAdd from "../images/musicAdd2.png";
+import { withRouter } from 'react-router-dom'
 
 const MusicPlayer = (props) => {
  
@@ -34,10 +35,15 @@ const MusicPlayer = (props) => {
       })
       .catch(err => console.log("reqSignIn Error: ", err));
     }else {
-      swal({
-        text: '로그인이 필요합니다.',
-        icon : "error",
+      swal("로그인이 필요합니다. \n \n로그인화면으로 이동합니다", {
+        dangerMode: true,
+        buttons : true,
       })
+      .then((gosignin) => {
+        if (gosignin) {
+          props.history.push('/signin')
+        } 
+      });
     }
   }
 
@@ -71,4 +77,4 @@ const MusicPlayer = (props) => {
     );
 }
 
-export default MusicPlayer;
+export default withRouter(MusicPlayer);
