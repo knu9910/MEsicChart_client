@@ -26,15 +26,15 @@ class MyMusicList extends React.Component {
     const res = await axios.get('http://3.34.124.39:3000/musiclist', { withCredentials: true });
     const data = res.data;
     console.log('res.data : ', data)
+
     data.sort((a, b) => b.playtime - a.playtime);
     const videoId = data[0].videoId;
     this.setState({ videos: data });
     this.setState({ videoId });
+
   } 
 
   handleVideoTitleClick = (videoId, index) => {
-    console.log(index)
-    // setCurVideo(video);
     player.loadVideoById(videoId, 0)
     this.setState({ videoIndex: index })
   };
@@ -96,14 +96,6 @@ class MyMusicList extends React.Component {
       player.unMute();
       this.setState({ activeButton: false });
     }
-    // const { activeButton } = this.state;
-    // if(!activeButton){
-    //   player.mute();
-    //   this.setState({ activeButton: true });
-    // } else {
-    //   player.unMute();
-    //   this.setState({ activeButton: false });
-    // }
   }
 
   handleShuffle = () => {
