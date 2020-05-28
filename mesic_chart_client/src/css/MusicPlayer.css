@@ -8,12 +8,19 @@
   gap: 20px;
 }
 
-.add-button {
+.add-icon {
+  width: 120px;
+  height: 120px;
   padding: 10px;
-  font-size: 20px;
   border-radius: 10px;
+  margin-bottom: 200px;
+  margin-left : 1520px;
+  margin-top: 330px;
+  cursor: pointer;
 }
 
-.embed-responsive-item {
 
+.embed-responsive-item {
+  position: absolute;
+  margin-left: 550px;
 }

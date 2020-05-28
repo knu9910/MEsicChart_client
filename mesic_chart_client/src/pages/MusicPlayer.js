@@ -3,6 +3,7 @@ import NavBar from '../components/NavBar';
 import "../css/MusicPlayer.css"
 import axios from 'axios'
 import swal from "sweetalert";
+import musicAdd from "../images/musicAdd3.png" 
 
 const MusicPlayer = (props) => {
  
@@ -21,7 +22,9 @@ const MusicPlayer = (props) => {
       }, { withCredentials: true })
       .then(res => {
         if(res.data === '이미 추가된 음악입니다.') {
-          swal({test:'이미 추가된 음악입니다.'});
+          swal({
+            text: '이미 추가된 음악입니다.',
+            icon : "warning",})
         } else if(res.data.title) {
           swal({
             text:`${res.data.title}이 추가됐습니다.`,
@@ -32,7 +35,7 @@ const MusicPlayer = (props) => {
       .catch(err => console.log("reqSignIn Error: ", err));
     }else {
       swal({
-        text: '로그인 하거라.',
+        text: '로그인이 필요합니다.',
         icon : "error",
       })
     }
@@ -60,7 +63,7 @@ const MusicPlayer = (props) => {
         <div>
           <div className="제목">{title}</div>
           <div className="description">{description}</div>
-          <button className="add-button" onClick={postMusicToPlaylist}>음악 추가하기</button>
+          <img src={musicAdd} className="add-icon" onClick={postMusicToPlaylist} />
         </div>
       </div>
     </div>
