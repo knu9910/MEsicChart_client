@@ -3,6 +3,7 @@ import MyMusicListEntry from "./MyMusicListEntry";
 import YouTube from 'react-youtube';
 import axios from "axios";
 
+let player;
 class MyMusicList extends React.Component {
   constructor(props){
     super(props)
@@ -23,7 +24,7 @@ class MyMusicList extends React.Component {
 
   handleVideoTitleClick = (videoId) => {
     // setCurVideo(video);
-    YouTube.loadVideoById(videoId, 0)
+    player.loadVideoById(videoId, 0)
   };
 
 
@@ -58,7 +59,7 @@ class MyMusicList extends React.Component {
               <p>목록</p>
               <i className="fas fa-ellipsis-v"></i>
             </div>
-            <button onClick={() => this.handleVideoTitleClick('5_IYVichXbA')}>눌러봐</button>
+            <button onClick={()=> this.handleVideoTitleClick('ztmOmJrTF5c')}>눌러봐</button>
             { 
               videos ?
               videos.map((video, index) => (
@@ -166,7 +167,7 @@ class MyMusicList extends React.Component {
   }
 
   _onReady(event) {
-    event.target.pauseVideo();
+    player = event.target;
   }
 
 }
