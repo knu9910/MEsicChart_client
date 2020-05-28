@@ -122,6 +122,7 @@ class MyMusicList extends React.Component {
 
   handleEnd = () => { // 종료시 호출
     console.log('end')
+    this.handleVideoNext();
   }
 
   handlePause = () => { // 멈춤시 호출
