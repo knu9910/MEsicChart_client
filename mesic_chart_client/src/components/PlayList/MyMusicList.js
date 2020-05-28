@@ -1,4 +1,5 @@
 import React from "react";
+import MyMusicListEntry from "./MyMusicListEntry";
 import YouTube from 'react-youtube';
 import axios from "axios";
 
@@ -7,7 +8,9 @@ class MyMusicList extends React.Component {
     super(props)
     this.state ={
       videoId: null,
-      videoInfo: []
+      videos: [],
+      totalTime: '0:00',
+
     }
   }
 
@@ -18,6 +21,20 @@ class MyMusicList extends React.Component {
     this.setState({ videoId });
   } 
 
+  handleVideoTitleClick = (videoId) => {
+    // setCurVideo(video);
+    YouTube.loadVideoById(videoId, 0)
+  };
+
+
+
+
+
+
+
+
+
+
   render() {
     const opts = {
       heigth: '390',
@@ -27,131 +44,124 @@ class MyMusicList extends React.Component {
       },
     };
 
-    return (
-      
-      
-      
-      <div>
-      <div className="musicList">
-        <div className="player">
-          <YouTube videoId={this.state.videoId} opts={opts} onReady={this._onReady} id="player"/>
+    const { videos, video, totalTime } = this.state
 
+    return (
+      <div>
+        <div className="musicList">
+          <div className="player">
+            <YouTube videoId={this.state.videoId} opts={opts} onReady={this._onReady} id="player"/>
+          </div>
+
+          <div className="list">
+            <div className="top-bar">
+              <p>목록</p>
+              <i className="fas fa-ellipsis-v"></i>
+            </div>
+            <button onClick={() => this.handleVideoTitleClick('5_IYVichXbA')}>눌러봐</button>
+            { 
+              videos ?
+              videos.map((video, index) => (
+                <MyMusicListEntry 
+                  key={index} video={video} thumbnail={video.thumbnail} title={video.title} musician={video.description} totalTime={totalTime}
+                  handleVideoTitleClick={() => this.handleVideoTitleClick(this)}
+                  // handleDeleteVideo={handleDeleteVideo.bind(this)}
+                />
+              )) : null
+            }
+          </div>
         </div>
 
-        <div className="list">
-          <div className="top-bar">
-            <p>목록</p>
-            <i className="fas fa-ellipsis-v"></i>
+        {/* playerBar */}
+        <div className="playerBar">
+          <div
+            className="loadBar"
+            // style={
+              // isLoading
+              //   ? {
+              //       width: mouseDragX
+              //         ? mouseDragX
+              //         : String(
+              //             (player.getCurrentTime() / player.getDuration()) * 100
+              //           ) + "vw",
+
+              //       border:
+              //         activeButton || mouseDragX
+              //           ? "2px solid #db021f"
+              //           : "0px solid #db021f",
+              //     }
+              //   : { width: "0vw" }
+            // }
+          >
+            <button
+              className="dragBtn"
+              // style={{ opacity: activeButton || mouseDragX ? "1" : "0" }}
+              // onMouseOver={() => setactiveButton(true)}
+              // onMouseOut={() => setactiveButton(false)}
+              // onMouseDown={drag}
+            />
           </div>
-          { 
-            // videoInfo ?
-            // videoInfo.map((video, index) => (
-            //   <MyMusicListEntry 
-            //     key={index}
-            //     video={video}
-            //     thumbnail={video.thumbnail}
-            //     title={video.title}
-            //     musician={video.description}
-            //     totalTime={totalTime}
-            //     handleVideoTitleClick={handleVideoTitleClick.bind(this)}
-            //     handleDeleteVideo={handleDeleteVideo.bind(this)}
-            //   />
-            // )) : null
-          }
+          <div className="controlsWrap">
+            <div className="leftControl">
+              <button
+                className="btn"
+                // onClick={() => handleVideoBack()}
+              >
+                <i className="fas fa-step-backward"></i>
+              </button>
+              <button
+                className="btn"
+                // onClick={() => {
+                //   handlePlayAndPause()
+                // }}
+              >
+                {/* {isPlaying ? (
+                  <i className="fas fa-pause"></i>
+                ) : (
+                  <i className="fas fa-play"></i>
+                )} */}
+              </button>
+              <button
+                className="btn"
+                // onClick={() => player.seekTo(player.getCurrentTime() + 10, true)}
+                // onClick={() => handleVideoNext()}
+              >
+                <i className="fas fa-step-forward"></i>
+              </button>
+            </div>
+
+            <div className="musicInfo">
+              <div className="thumbnail">
+                {/* <img src={curVideo? curVideo.thumbnail : ""} /> */}
+              </div>
+              <div className="music-info">
+                <div className="title">
+                  {/* {curVideo? curVideo.title : null} */}
+                </div>
+                <div className="musician">
+                  {/* {curVideo? curVideo.description : []} */}
+                </div>
+              </div>
+              <div className="time">
+                {/* {isLoading ? `${currentTime} / ${totalTime}` : ""} */}
+              </div>
+            </div>
+
+            {/* <div className="rightControl">
+              <button className="btn" onClick={() => handleMuteAndUnMute()}>
+                <i className="fas fa-volume-up"></i>
+              </button>
+              <button className="btn" onClick={() => handleMuteAndUnMute()}>
+                <i className="fas fa-volume-mute"></i>
+              </button>
+              <button className="btn" onClick={()=> handleShuffle()}>
+              <i className="fas fa-random" ></i>
+              </button>
+              
+            </div> */}
+          </div>
         </div>
       </div>
-
-      {/* playerBar */}
-                <div className="playerBar">
-                  <div
-                    className="loadBar"
-                    // style={
-                      // isLoading
-                      //   ? {
-                      //       width: mouseDragX
-                      //         ? mouseDragX
-                      //         : String(
-                      //             (player.getCurrentTime() / player.getDuration()) * 100
-                      //           ) + "vw",
-
-                      //       border:
-                      //         activeButton || mouseDragX
-                      //           ? "2px solid #db021f"
-                      //           : "0px solid #db021f",
-                      //     }
-                      //   : { width: "0vw" }
-                    // }
-                  >
-                    <button
-                      className="dragBtn"
-                      // style={{ opacity: activeButton || mouseDragX ? "1" : "0" }}
-                      // onMouseOver={() => setactiveButton(true)}
-                      // onMouseOut={() => setactiveButton(false)}
-                      // onMouseDown={drag}
-                    />
-                  </div>
-                  <div className="controlsWrap">
-                    <div className="leftControl">
-                      <button
-                        className="btn"
-                        // onClick={() => handleVideoBack()}
-                      >
-                        <i className="fas fa-step-backward"></i>
-                      </button>
-                      <button
-                        className="btn"
-                        // onClick={() => {
-                        //   handlePlayAndPause()
-                        // }}
-                      >
-                        {/* {isPlaying ? (
-                          <i className="fas fa-pause"></i>
-                        ) : (
-                          <i className="fas fa-play"></i>
-                        )} */}
-                      </button>
-                      <button
-                        className="btn"
-                        // onClick={() => player.seekTo(player.getCurrentTime() + 10, true)}
-                        // onClick={() => handleVideoNext()}
-                      >
-                        <i className="fas fa-step-forward"></i>
-                      </button>
-                    </div>
-
-                    <div className="musicInfo">
-                      <div className="thumbnail">
-                        {/* <img src={curVideo? curVideo.thumbnail : ""} /> */}
-                      </div>
-                      <div className="music-info">
-                        <div className="title">
-                          {/* {curVideo? curVideo.title : null} */}
-                        </div>
-                        <div className="musician">
-                          {/* {curVideo? curVideo.description : []} */}
-                        </div>
-                      </div>
-                      <div className="time">
-                        {/* {isLoading ? `${currentTime} / ${totalTime}` : ""} */}
-                      </div>
-                    </div>
-
-                    {/* <div className="rightControl">
-                      <button className="btn" onClick={() => handleMuteAndUnMute()}>
-                        <i className="fas fa-volume-up"></i>
-                      </button>
-                      <button className="btn" onClick={() => handleMuteAndUnMute()}>
-                        <i className="fas fa-volume-mute"></i>
-                      </button>
-                      <button className="btn" onClick={()=> handleShuffle()}>
-                      <i className="fas fa-random" ></i>
-                      </button>
-                      
-                    </div> */}
-                  </div>
-                </div>
-    </div>
-    
     )
   }
 
@@ -163,104 +173,6 @@ class MyMusicList extends React.Component {
 
 export default MyMusicList;
 
-
-// import React, { Component } from 'react';
-// import axios from "axios";
-
-// let player;
-// class MyMusicListEntry extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {  
-
-//     }
-
-//     window.onYouTubeIframeAPIReady = () => {
-//       player = new window["YT"].Player('player', {
-//         height: '380',
-//         width: '700',
-//         videoId: 'M7lc1UVf-VE',
-  
-//         host: "https://www.youtube.com",
-//         playerVars: {
-//           autoplay: 1,
-//           controls: 0,
-//           enablejsapi: 1,
-//           origin: 1,
-//         },
-//         events: {
-//           // video player가 준비되면 이 함수 호출
-//           onReaady: this.onPlayerReady,
-//           // player의 상태가 바뀌면 이 함수 호출
-//           onStateChange: this.onPlayerStateChange,
-//         },
-//       });
-//     };
-
-//   }
-  
-//   componentDidMount() {
-//     var requestOptions = {
-//       method: 'GET',
-//       redirect: 'follow'
-//     };
-    
-//     axios.get("http://3.34.124.39:3000/musiclist", { withCredentials: true })
-//       .then(res => {
-//         console.log('res.data : ', res.data);
-//         res.data.sort((a, b) => a - b);
-        
-//       })
-//       .catch(err => console.log(err));
-
-
-//       // axios.post('http://3.34.124.39:3000/googleSignin', {
-//       //   email,
-//       //   name
-//       // }, {withCredentials:true})
-//       // .then(res => {
-//       //   if(res.status === 201){
-//       //     this.props.onLogin();
-//       //   }
-//       // })
-//       // .catch(err => console.log(err));
-
-
-    
-//   }
-
-//   onPlayerReady(event) {
-//     event.target.playVideo();
-//   }
-
-//   onPlayerStateChange(event) {
-//     // if (event.data == YT.PlayerState.PLAYING) {
-
-//     // }
-//   }
-
-//   stopVideo() {
-//     player.stopVideo();
-//   }
-
-
-
-
-
-
-
-
-//   render() { 
-//     return (
-//       <React.Fragment>
-//         <div id="player"></div>
-//         <div>hello world</div>
-//       </React.Fragment>
-//     );
-//   }
-// }
- 
-// export default MyMusicListEntry;
 
 
 
