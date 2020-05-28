@@ -2,6 +2,7 @@ import React from "react";
 import "../css/SignUp.css";
 import logo from "../images/free_horizontal_on_white_by_logaster6.png";
 import swal from "sweetalert";
+import { withRouter } from 'react-router-dom'
 
 class signUp extends React.Component {
   constructor(props) {
@@ -71,8 +72,11 @@ class signUp extends React.Component {
         redirect: 'follow'
       };
       fetch("http://3.34.124.39:3000/signup", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
+        .then(response => {
+          if(response.status === 201) {
+            this.props.onLogin()
+          }
+        })
         .catch(error => console.log('error', error));
     }
   }
@@ -140,4 +144,4 @@ class signUp extends React.Component {
   }
 }
 
-export default signUp;
+export default withRouter(signUp);
