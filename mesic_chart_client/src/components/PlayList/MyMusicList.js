@@ -110,8 +110,8 @@ class MyMusicList extends React.Component {
 
   render() {
     const opts = {
-      heigth: '390',
-      width: '640',
+      heigth: '100%',
+      width: '100%',
       playerVars: {
         autoplay: 1,
       },
@@ -128,8 +128,8 @@ class MyMusicList extends React.Component {
 
           <div className="list">
             <div className="top-bar">
-              <p>목록</p>
-              <i className="fas fa-ellipsis-v"></i>
+              <p>많이 재생한 순서</p>
+              {/* <i className="fas fa-ellipsis-v"></i> */}
             </div>
             {/* <button onClick={()=> this.handleVideoTitleClick('ztmOmJrTF5c')}>눌러봐</button> */}
             { videos ? videos.map((video, index) => (

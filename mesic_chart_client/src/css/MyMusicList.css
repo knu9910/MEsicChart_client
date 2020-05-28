@@ -1,20 +1,18 @@
+html {
+  overflow: hidden;
+}
+
+
 .musicList {
-  width: 100vw;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
   height: 80vh;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 45px;
-  background-color: white;
+  background-color: black;
 }
 
 .player {
-  width: 55vw;
-  padding: 64px 48px 72px 48px;
-  display: flex;
-  align-items: center;
-  flex-basis: 33%;
+  display: grid;
+  align-content: center;
 }
 
 #player {
@@ -23,12 +21,13 @@
 
 .list {
   width: 35vw;
-  height: 70vh;
-  color: black;
+  /* width: 500px; */
+  height: 80vh;
+  color: white;
   overflow-x: hidden;
 }
 
-.list::-webkit-scrollbar{
+.list::-webkit-scrollbar {
   display: none;
 }
 
@@ -43,48 +42,26 @@
 }
 
 .contents {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-bottom: 1px solid;
-  margin-top: 5px;
-  padding: 10px;
+  display: grid;
+  grid-template-columns: 100px 1fr 50px;
+  /* height: 80px; */
 }
 
 .thumbnail {
-  width: 90px;
-  height: 90px;
-  align-self: center;
+  /* width: 100%; */
+  /* height: auto; */
   background-image: url(https://i.ytimg.com/vi/TgOu00Mf3kI/sddefault.jpg);
   background-size: cover;
-  /* background-position: center; */
-  border: 1px solid red;
 }
 
-/* .thumbnail img { */
-  /* width: 40px;
-  height: 40px; */
-  /* width: 5vw;
-  height: 5vh; */
-/* } */
-
 .music-info {
-  display: flex;
-  flex-direction: column;
+  margin: 10px;
+  display: grid;
   font-family: 'Noto Sans KR', sans-serif; 
-  /* display: inline-block;
-  width: 25vw;
-  white-space: nowrap; 
-  overflow: hidden; 
-  text-overflow: ellipsis; */
-  /* display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden; */
 }
 
 .music-info .title {
-  color: black;;
+  color: white;
   font-size: 20px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -100,20 +77,28 @@
   overflow: hidden;
 }
 
+.music-info2 {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr 1fr;
+  align-content: center;
+  justify-content: center;
+}
+
 .time {
   align-self: center;
 }
 
 /* playerBar */
-.playerBar{
+.playerBar {
   position: sticky;
   bottom: 0;
 }
 
 .btn {
   all: unset;
-  padding: 0px 20px;
-  font-size: 24px;
+  text-align: center;
+  font-size: 15px;
   color: #ffffff;
   cursor: pointer;
 }
