@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/SignUp.css";
 import logo from "../images/free_horizontal_on_white_by_logaster6.png";
-import { withRouter } from "react-router-dom";
+import swal from "sweetalert";
 
 class signUp extends React.Component {
   constructor(props) {
@@ -31,19 +31,32 @@ class signUp extends React.Component {
     console.log(value)
   }
   onButtonClick = () => {
+    // console.log('buttonclicked');
     const { id, password, password2, name } = this.state;
-    if(id === '') {
-      alert('아이디가 비어 있습니다.');
+    if(id === '') { 
+      swal({
+      text: '이메일이 비어 있습니다.',
+      icon : "error",})
     } else if(id.split('').indexOf('@') === -1) {
-      alert('아이디는 이메일 형식이어야 합니다.')
+      swal({
+        text: '이메일형식에 맞춰야 합니다.',
+        icon : "error",})
     } else if(password === '') {
-      alert('암호가 비어 있습니다.');
+      swal({
+        text: 'password가 비어 있습니다..',
+        icon : "error",})
     } else if(password.length < 8) {
-      alert('암호는 8 글자 이상이어야 합니다.');
+      swal({
+        text: 'password는 8글자 이상이어야 합니다.',
+        icon : "error",})
     } else if(password !== password2) {
-      alert('password와 confirm password가 일치해야 합니다.')
+      swal({
+        text: 'password와 password confirm이 같아야 합니다',
+        icon : "error",})
     } else if(name === '') {
-      alert('이름이 비어 있습니다.');
+      swal({
+        text: '이름이 비어 있습니다.',
+        icon : "success",});
     } else { // 통과 했을 경우에만 요청
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -60,11 +73,8 @@ class signUp extends React.Component {
       };
 
       fetch("http://3.34.124.39:3000/signup", requestOptions)
-        .then(response => {
-          if(response.status === 201) {
-            this.props.history.push('/');
-          }
-        })
+        .then(response => response.text())
+        .then(result => console.log(result))
         .catch(error => console.log('error', error));
     }
   }
@@ -80,7 +90,7 @@ class signUp extends React.Component {
                 <img src={logo} className="Mesic-logo" alt="logo" />
               </div>
               <label htmlFor="ID" className="label-field">
-                id{" "}
+                이메일{" "}
               </label>
               <input id="ID" className="input-field" type="text" required onChange={(e) => this.insertId(e.target.value)}></input>
           
@@ -132,7 +142,7 @@ class signUp extends React.Component {
   }
 }
 
-export default withRouter(signUp);
+export default signUp;
 
 {
   /* <div class="Mesic-logo">
