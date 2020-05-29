@@ -1,11 +1,13 @@
-import React, { Component} from "react";
+import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import axios from 'axios'
 import { GoogleLogin } from 'react-google-login';
 import "../css/SignIn.css";
 import swal from "sweetalert";
-import  KakaoLogin from 'react-kakao-login'; 
+import KakaoLogin from 'react-kakao-login'; 
 import styled from 'styled-components';
+import google_icon from "../images/google-icon.png";
+import kakao_icon from  "../images/kakao_icon.png"
 require('dotenv').config();
 
 class SignIn extends React.Component {
@@ -97,27 +99,31 @@ class SignIn extends React.Component {
             </form>
           </div>
           <Container>
-          <div className="login-google">
-         
-            <GoogleLogin
+       
+            <div className="temp">
+            <GoogleLogin 
               clientId= {process.env.REACT_APP_CLIENT_ID}
               render={renderProps => (
-                <button onClick={renderProps.onClick} disabled={renderProps.disabled}>Sign in with Google</button>
+                <img className="login-button-google" onClick={renderProps.onClick} disabled={renderProps.disabled} src={google_icon}/>
               )}
               buttonText="Sign in with Google"
               onSuccess={this.responseGoogle}
               onFailure={this.responseFail}
               cookiePolicy={'single_host_origin'}
             />
-          </div>
          
-           <KakaoButton
-             jsKey={'fa7d8ef045eb03804876e181cb7a51ef'}
+         
+           <KakaoLogin
+              render={renderProps => (
+                <img className="login-kakao" onClick={renderProps.onClick} disabled={renderProps.disabled} src={kakao_icon}/>
+              )}
+             jsKey={process.env.REACT_APP_KaKao_Key}
              buttonText="Kakao"
              onSuccess={this.responseKakao}
              onFailure={this.responseFail}
              getProfile="true"
             />
+            </div>
                
           </Container>
         </div>
@@ -129,18 +135,5 @@ class SignIn extends React.Component {
 const Container = styled.div`
   display: flex;
   flex-flow: column wrap;
-`
-const KakaoButton = styled(KakaoLogin)`
-  padding:0
-  width: 190px;
-  heigth: 44px;
-  line-height: 44px;
-  color: #783c00;
-  background-color: #FFEB00;
-  border: 1px soild transparent;
-  border-redius: 3px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
 `
 export default withRouter(SignIn);

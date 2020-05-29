@@ -34,7 +34,7 @@ class App extends React.Component {
     window.localStorage.clear();
   }
   searchMusic(query) {
-    searchMusicsByText(query, 100)
+    searchMusicsByText(query, 50)
     .then(res => res.json())
     .then((json) => {
       const videos = json.items
