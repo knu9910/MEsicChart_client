@@ -55,9 +55,6 @@ class signUp extends React.Component {
         text: '이름이 비어 있습니다.',
         icon : "error",});
     } else { // 통과 했을 경우에만 요청
-      swal({
-        text: '회원가입에 성공했습니다.',
-        icon : "success",});
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       var raw = JSON.stringify({
@@ -75,10 +72,23 @@ class signUp extends React.Component {
       fetch("http://3.34.124.39:3000/signup", requestOptions)
         .then(response => {
           if(response.status === 201) {
-            this.props.onLogin()
-          }
+            swal({
+              text: '회원가입에 성공했습니다.',
+              icon : "success",});
+              this.props.onLogin();
+            }else {
+              swal({
+                text: '이미 회원가입된 아이디입니다',
+                icon: "error",
+              })
+            }
         })
-        .catch(error => console.log('error', error));
+        .catch(error => {
+          swal({
+            text: '이미 회원가입된 아이디입니다',
+            icon: "error",
+          })
+        });
     }
   }
   
