@@ -2,9 +2,6 @@ import React from "react";
 import axios from 'axios'
 import { Link, withRouter } from "react-router-dom";
 import "../css/navBar.css";
-import loginIcon from "../images/login-icon.png";
-import logoutIcon from "../images/logout-icon2.png";
-
 const navBar = (props) => {
   const {searchMusic, onLogout, isSignIn} = props;
   const handleKeyPress = (e) => {
@@ -21,7 +18,7 @@ const navBar = (props) => {
     axios.get('http://3.34.124.39:3000/signout',{withCredentials:true})
     onLogout();
   }
-  let signState = isSignIn ? <div className = "signout" onClick = {signOutEvent}><img src={logoutIcon} className="logout-Icon"/></div> : <a className = "signin" href='/signin'><img src={loginIcon} className="login-Icon"/></a>
+  let signState = isSignIn ? <div className = "signout" onClick = {signOutEvent}><i className="fas fa-sign-out-alt"></i></div> : <a className = "signin" href='/signin'><i class="fas fa-sign-in-alt"></i></a>
   
   return (
     <div className="nav-bar">
@@ -40,12 +37,11 @@ const navBar = (props) => {
         <Link to="/playlist" className="link" >
           <i className="fas fa-record-vinyl"></i>
         </Link>
-        <div className="dropdown">
-        <i className="fas fa-ellipsis-v"></i>
-        <div className="dropdown-content">
+       
+        
           {signState}
-        </div>
-        </div>
+       
+        
       </div>
     </div>
   );

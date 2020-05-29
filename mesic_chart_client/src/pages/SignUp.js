@@ -2,7 +2,7 @@ import React from "react";
 import "../css/SignUp.css";
 import logo from "../images/free_horizontal_on_white_by_logaster6.png";
 import swal from "sweetalert";
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 class signUp extends React.Component {
   constructor(props) {
