@@ -1,0 +1,171 @@
+.musicList {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  height: 80vh;
+  background-color: black;
+}
+
+.player {
+  display: grid;
+  align-content: center;
+}
+
+#player {
+  align-self: center;
+}
+
+.list {
+  width: 35vw;
+  /* width: 500px; */
+  height: 80vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-start;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid;
+  padding-bottom: 10px;
+}
+
+.contents {
+  display: grid;
+  grid-template-columns: 100px 1fr 50px;
+  /* height: 80px; */
+}
+
+.thumbnail {
+  /* width: 100%; */
+  /* height: auto; */
+  background-image: url(https://i.ytimg.com/vi/TgOu00Mf3kI/sddefault.jpg);
+  background-size: cover;
+}
+
+.music-info {
+  margin: 10px;
+  display: grid;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+
+.music-info .title {
+  color: white;
+  font-size: 20px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.music-info .musician {
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.music-info2 {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr 1fr;
+  align-content: center;
+  justify-content: center;
+}
+
+.time {
+  align-self: center;
+}
+
+/* playerBar */
+.playerBar {
+  position: sticky;
+  bottom: 0;
+}
+
+.btn {
+  all: unset;
+  text-align: center;
+  font-size: 15px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.loadBar {
+  position: relative;
+  z-index: 100;
+  height: 2px;
+  position: fixed;
+  bottom: 10vh;
+  left: 0px;
+  background-color: #db021f;
+}
+
+.dragBtn {
+  position: absolute;
+  transform: translate(50%, -50%);
+  right: 0px;
+  top: 0px;
+  width: 16px;
+  height: 16px;
+  background-color: #db021f;
+  border-radius: 50%;
+  transition: all 0.1s ease-in;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.controlsWrap {
+  color: #909090;
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 25px;
+  padding: 20px;
+  text-align: center;
+  background-color: #1d1d1d;
+  color: #fff;
+}
+
+.leftControl {
+  width: 30vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.musicInfo {
+  width: 40vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-self: center;
+  align-items: center;
+  flex-grow: 4;
+  font-size: 14px;
+  margin-left: 100px;
+  margin-right: 100px;
+  color: #fff;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+
+.musicInfo .thumbnail img {
+  width: 50px;
+  height: 50px;
+}
+
+.rightControl {
+  width: 30vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+}

@@ -1,0 +1,103 @@
+.nav-bar {
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30px;
+  padding: 20px;
+  background-color: #1d1d1d;
+  color: #fff;
+  position: sticky;
+  top : 0;
+}
+
+.left-content {
+  width: 30vw;
+  text-align: left;
+  margin-left: 80px
+}
+
+.left-content i {
+  margin-right: 10px;
+}
+.title {
+  font-size: 30px;
+  text-decoration: none;
+  color: #fff;
+}
+.link{
+  text-decoration: none;
+  color: #fff;
+}
+.center-content {
+  width: 700px;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+}
+#text1 {
+  width : 600px;
+  height: 40px;
+  font-family: 'Noto Sans KR', sans-serif;  
+  font-size: 20px;
+  font-weight: bold;
+}
+.fas.fa-search {
+  margin-left: 10px;
+  margin-top: 8.6px;
+  cursor: pointer;
+}
+.right-content {
+  width: 30vw;
+  display: flex;
+  justify-content: flex-end;
+}
+.fas.fa-home {
+  margin-right: 40px;
+}
+.fas.fa-record-vinyl {
+  margin-right: 40px;
+}
+.fas.fa-ellipsis-v {
+  margin-right: 40px;
+  cursor: pointer;
+}
+.login-Icon {
+  width : 60px;
+  height: 60px;
+  color: white;
+  margin-top: 30px;
+  margin-left: -10px;
+}
+
+.logout-Icon {
+  width : 80px;
+  height: 60px;
+  color: white;
+  background-color: white;
+  margin-top: 45px;
+  margin-left: -8px;
+  cursor: pointer;
+}
+.dropdown { position: relative; display: inline-block; }
+
+.dropdown-content {
+  left : -30px;
+  display: none;
+  position: absolute;
+  width: 60px;
+  height : 140px;
+  padding: 8px;
+}
+.signin {
+  text-decoration: none;
+  color: #fff;
+}
+
+.dropdown-content a { color: crimson; padding: 8px; text-decoration: none; display: block; }
+
+.dropdown-content a:hover {}
+
+.dropdown:hover .dropdown-content { display: block; }
+
+

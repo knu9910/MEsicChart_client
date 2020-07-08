@@ -1,0 +1,92 @@
+.wrapper {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    cursor: auto;
+}
+.swal-overlay {    
+}
+.SignUp-header {
+    text-align : center;
+    display: grid;
+    justify-items: center;
+    width: 370px;
+}
+.swal-text {
+    font-size : 19px;
+    font-weight: bold;
+    font-family: 'Jua', sans-serif; 
+}
+.swal-modal {
+    border: 3px solid black;
+    border-radius: 30px;
+}  
+
+input::placeholder {
+    color: black;
+    opacity: 1; /* 파이어폭스에서 뿌옇게 나오는 현상을 방지하기 위한 css */
+    font-style : inherit;
+}
+.Mesic-logo-wrapper {
+
+}
+.Mesic-logo {
+    max-width: 100%; 
+    height: auto;
+    position: relative;
+    top: 20px;
+}
+#legend {
+    font-size: 30px;
+    text-align: center;
+}
+.Input-Area {
+    display: grid;
+    grid-template-columns: 95px 1fr;
+    gap: 20px;
+    width: 400px;
+}
+.label-field {
+    display: inline-block;
+    position: relative;
+    font-size: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 50px;
+    text-align: end;
+}
+#confirm-password {
+    line-height: 25px;
+}
+.input-field {
+    display: block;
+    background: none;
+    font-size: 15px;
+    color: #000;
+    text-align: left;
+    padding: 15px;
+    box-sizing: border-box;
+    border: 2.5px solid #000;
+    border-radius: 10px;
+}
+
+.submit {
+    background: none;
+    color: #000;
+    font-size: 15px;
+    font-weight: bold;
+    width: 150px;
+    padding: 15px;
+    border: 2.5px solid #10ac84;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    transition-property: background;
+  }
+  
+.submit:hover,
+.submit:active,
+.submit:focus {
+    background: #10ac84;
+}

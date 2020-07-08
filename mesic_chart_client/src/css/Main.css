@@ -1,0 +1,108 @@
+#root {
+    cursor: url(../images/cursor3.cur) 0 0, pointer;
+}
+body {
+    background-color: white;
+}
+.main {
+    text-align : center;
+}
+.nav-bar {
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+    padding: 20px;
+    background-color: #1d1d1d;
+    color: #fff;
+}
+.mesic-Logo {
+    width : 350px;
+    height: 150px;
+    margin-top: 30px;
+}
+.search-text {
+    width: 400px;
+    height: 50px;
+    font-size: 25px;
+    text-align: left;
+    font-family: 'Jua', sans-serif;
+    margin-right: 20px;
+}
+.search-Button {
+    width: 100px;
+    height: 56px;
+    font-size: 25px;
+    font-family: 'Jua', sans-serif;
+}
+input::-webkit-input-placeholder {
+    color: red;
+    font-style: italic;
+}
+
+.recommended-Message {
+    font-size: 60px;
+    font-family: 'Fjalla One', sans-serif;    
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: black;
+}
+.videos {
+    width: 400px;
+    height: 250px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.videos:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 30px 30px rgba(0,0,0,0.22);
+    
+}
+.video-field {
+    display: inline-flex;
+    flex-direction: column;
+    width: 400px;
+    justify-content: space-around;
+    margin-right: 60px;
+}
+.videoTitle {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;    
+    color: black;
+    white-space: pre-line;
+    width: 400px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.footer {
+    display: grid;
+    grid-auto-flow: column;
+    height: 8vh;
+    font-size: 25px;
+    padding: 20px;
+    background-color: #1d1d1d;
+    color: #fff;
+}
+.footer-playlist {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+}
+.footer-signchange {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+}
+.main-footer {
+    margin-top: 124.5px;
+    position: relative;
+    width: 100vw;
+    height: 8vh;
+    font-size: 25px;
+    padding: 20px;
+    background-color: #1d1d1d;
+    color: #fff;
+  }
+  

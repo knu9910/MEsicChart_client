@@ -1,12 +1,20 @@
 import React from 'react';
+import MusicEntry from './MusicEntry'
 
-const recommandedMusicList = () => {
+const recommandedMusicList = (props) => {
+    console.log(props)
+    const videos = props.videos.map(video =>
+    <MusicEntry video={video} changeMusicPlayer = {props.changeMusicPlyer}/>
+    ) 
     return (
-        <div>
-            <h2>
-                추천음악리스트
-            </h2>
+        <div className="videos-field">
+          <div className="recommended-Message">
+              Please Select Music
+          </div>
+          <div className="main-Videos">
+              {videos}
+          </div>
         </div>
-    );
+    )
 };
 export default recommandedMusicList;
